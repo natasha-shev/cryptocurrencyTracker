@@ -1,6 +1,8 @@
 <template>
-<img :src = "'https://www.cryptocompare.com/' + image">
-<span>{{name}} | {{fullName}}</span>
+  <div>
+    <img :src = "'https://www.cryptocompare.com/' + image">
+    <strong id="names">{{name}} | {{fullName}}</strong>
+  </div>
 </template>
 
 <script>
@@ -14,5 +16,12 @@ export default {
 img {
   width: 50px;
   padding: 5px 10px;
+}
+div {
+  display: flex;
+  height: 100%;
+}
+#names {
+  align-self: center;
 }
 </style>
