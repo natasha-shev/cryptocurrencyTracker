@@ -1,6 +1,7 @@
 <template>
 <div>
   <CurrencyName :image="curr.CoinInfo.ImageUrl" :name="curr.CoinInfo.Name" :full-name="curr.CoinInfo.FullName"/>
+  <div>$ {{curr.RAW.USD.PRICE}}</div>
 </div>
 </template>
 
