@@ -1,5 +1,5 @@
 <template>
-<img src = "image">
+<img :src = "'https://www.cryptocompare.com/' + image">
 <span>{{name}} | {{fullName}}</span>
 </template>
 
@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style scoped>
-
+img {
+  width: 50px;
+  padding: 5px 10px;
+}
 </style>
