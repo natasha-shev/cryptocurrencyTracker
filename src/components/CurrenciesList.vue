@@ -1,6 +1,6 @@
 <template>
-<div>
-  <div >
+<div id="list">
+  <div>
     <CurrencyPane class="pane" v-for="curr of currencies" :key="curr.CoinInfo.Id"
                   :curr="curr"></CurrencyPane>
   </div>
@@ -17,10 +17,15 @@ export default {
 </script>
 
 <style scoped>
+#list {
+  display: flex;
+  justify-content: center;
+}
 .pane {
   margin-bottom: 25px;
   margin-top: 25px;
   border: 10px solid;
-  width: 35%;
+
+  display: flex;
 }
 </style>
