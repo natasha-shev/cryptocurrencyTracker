@@ -1,20 +1,39 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <AppTitle id="title"/>
+  <CurrenciesList :currencies="currencies"></CurrenciesList>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import AppTitle from "./components/AppTitle";
+import CurrenciesList from "./components/CurrenciesList";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    AppTitle,  CurrenciesList
+  },
+
+  data() {
+    return {
+      currencies: [],
+    }
+  },
+
+  mounted() {
+    fetch('https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD')
+        .then(response => response.json())
+        .then(json => {this.currencies = json.Data;
+          console.log(this.currencies) //для провирки
+        })
+  },
+
+
 }
 </script>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
