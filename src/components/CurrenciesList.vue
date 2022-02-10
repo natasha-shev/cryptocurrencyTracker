@@ -25,7 +25,5 @@ export default {
   margin-bottom: 25px;
   margin-top: 25px;
   border: 10px solid;
-
-  display: flex;
 }
 </style>
