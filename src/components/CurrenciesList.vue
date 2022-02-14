@@ -9,6 +9,7 @@
 
 <script>
 import CurrencyPane from "./CurrencyPane";
+import axios from "axios";
 export default {
   name: "CurrenciesList",
   //props: ['currencies'],
@@ -22,11 +23,12 @@ export default {
   },
 
   mounted() {
-    fetch('https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD')
-        .then(response => response.json())
-        .then(json => {
-          this.currencies = json.Data;
-          console.log(this.currencies) //для провирки
+    axios
+        .get('https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD')
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.currencies = response.data.Data
+          console.log(this.currencies)
         })
   },
 
