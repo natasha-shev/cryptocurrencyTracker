@@ -34,22 +34,26 @@ export default {
     return {
       password: '',
       email: '',
+      errored: false,
     }
   },
 
   methods: {
     postLogin() {
+      let self = this;
       axios.post('http://127.0.0.1:8000/api/login', {
         email: this.email,
         password: this.password
       })
     .then(function (response) {
-        console.log(response);
+      console.log(response.status);
+      console.log(response.statusText);
+      self.$router.push('/');
       })
           .catch(function (error) {
             console.log(error);
+            self.errored = true;
           });
-
     }
   }
 }
