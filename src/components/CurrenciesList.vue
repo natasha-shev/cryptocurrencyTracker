@@ -11,8 +11,25 @@
 import CurrencyPane from "./CurrencyPane";
 export default {
   name: "CurrenciesList",
-  props: ['currencies'],
+  //props: ['currencies'],
   components: {CurrencyPane},
+
+
+  data() {
+    return {
+      currencies: [],
+    }
+  },
+
+  mounted() {
+    fetch('https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD')
+        .then(response => response.json())
+        .then(json => {
+          this.currencies = json.Data;
+          console.log(this.currencies) //для провирки
+        })
+  },
+
 }
 </script>
 

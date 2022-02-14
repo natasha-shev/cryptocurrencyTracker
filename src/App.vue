@@ -1,33 +1,20 @@
 <template>
   <AppTitle id="title"/>
-  <CurrenciesList :currencies="currencies"></CurrenciesList>
+<!--  <CurrenciesList :currencies="currencies"></CurrenciesList>-->
+  <router-link to="/login">Login</router-link>
+  <router-view />
 </template>
 
 <script>
 
 import AppTitle from "./components/AppTitle";
-import CurrenciesList from "./components/CurrenciesList";
+// import CurrenciesList from "./components/CurrenciesList";
 
 export default {
   name: 'App',
   components: {
-    AppTitle,  CurrenciesList
+    AppTitle,  //CurrenciesList
   },
-
-  data() {
-    return {
-      currencies: [],
-    }
-  },
-
-  mounted() {
-    fetch('https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD')
-        .then(response => response.json())
-        .then(json => {this.currencies = json.Data;
-          console.log(this.currencies) //для провирки
-        })
-  },
-
 
 }
 </script>
