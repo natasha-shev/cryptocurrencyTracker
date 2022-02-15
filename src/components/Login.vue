@@ -34,7 +34,6 @@ export default {
     return {
       password: '',
       email: '',
-      errored: false,
     }
   },
 
@@ -46,14 +45,16 @@ export default {
         password: this.password
       })
     .then(function (response) {
-      console.log(response.status);
-      console.log(response.statusText);
+      console.log(response);
+      const token = localStorage.setItem('token', response.data.access_token);
+      self.$store.commit('auth_success', {token: token, status: "success"} );
       self.$router.push('/');
       })
           .catch(function (error) {
             console.log(error);
-            self.errored = true;
+            localStorage.removeItem('token') //пока логаута немаэ будет выходить при отправке всякой херни
           });
+      //console.log(localStorage.getItem('token'))
     }
   }
 }
