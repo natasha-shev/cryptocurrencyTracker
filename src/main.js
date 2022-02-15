@@ -19,6 +19,10 @@ const store = createStore({
         auth_error(state){
             state.status = 'error'
         },
+        logout(state) {
+            state.status = ''
+            state.token = ''
+        },
     },
 
     getters: {
