@@ -38,6 +38,11 @@ router.beforeEach((to) => { //from
             path: '/login',
         }
     }
+    if (!to.meta.requiresAuth && store.getters.isLoggedIn) {
+        return {
+            path: '/',
+        }
+    }
 })
 
 export default router;
