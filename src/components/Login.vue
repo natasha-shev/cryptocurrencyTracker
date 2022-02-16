@@ -6,7 +6,7 @@
           <div class="form-data">
 <!--            <div class="form-data" v-if="!submitted">-->
             <div class="forms-inputs mb-4"> <span>Email</span>
-              <input autocomplete="off" type="text" v-model="email" class="form-control">
+              <input  type="email" v-model="email" class="form-control">
             </div>
             <div class="forms-inputs mb-4"> <span>Password</span>
               <input autocomplete="off" type="password" v-model="password" class="form-control">
@@ -15,6 +15,9 @@
               <button v-on:click="postLogin()">Login</button>
             </div>
           </div>
+          <router-link to="/register">
+            <button>Registration</button>
+          </router-link>
 <!--          <div class="success-data" v-else>-->
 <!--            <div class="text-center d-flex flex-column"> <i class='bx bxs-badge-check'></i> <span class="text-center fs-1">You have been logged in <br> Successfully</span> </div>-->
 <!--          </div>-->
@@ -52,7 +55,6 @@ export default {
       })
           .catch(function (error) {
             console.log(error);
-            localStorage.removeItem('token') //пока логаута немаэ будет выходить при отправке всякой херни
           });
       //console.log(localStorage.getItem('token'))
     }
