@@ -1,8 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
-//import App from '@/App'
 import Login from './components/Login'
 import CurrenciesList from "./components/CurrenciesList";
+import Register from "./components/Register";
 import store from './main.js';
+
 
 const routes = [
     {
@@ -14,6 +15,11 @@ const routes = [
     {
         path: '/login',
         component: Login
+    },
+
+    {
+        path: '/register',
+        component: Register
     }
 ];
 
