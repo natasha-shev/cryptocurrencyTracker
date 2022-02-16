@@ -11,11 +11,13 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input autocomplete="off" type="password" v-model="password" placeholder="Password" id='password'>
+        <input autocomplete="off" :type="type" v-model="password" placeholder="Password" id='password'>
+        <button @click.prevent="toggleVisibility()">{{ btnText }}</button>
       </div>
-      <button v-on:click.prevent.stop="postRegister()">Register</button>
+      <button @click.prevent.stop="postRegister()">Register</button>
     </form>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -28,6 +30,8 @@ export default {
       name: '',
       email: '',
       password: '',
+      btnText: 'show',
+      type: 'password',
     }
   },
 
@@ -49,7 +53,17 @@ export default {
             console.log(error);
           });
       //console.log(localStorage.getItem('token'));
-    }
+    },
+
+    toggleVisibility() {
+      if (this.type === 'password') {
+        this.type = 'text'
+        this.btnText = 'hide'
+      } else {
+        this.type = 'password'
+        this.btnText = 'show'
+      }
+    },
   }
 }
 </script>
