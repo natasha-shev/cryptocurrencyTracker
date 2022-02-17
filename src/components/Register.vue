@@ -1,61 +1,60 @@
-<template id="registerTemplate">
-    <form ref='form' class='register-form'>
-      <h2>Registration</h2>
-      <div class="form-group" >
-        <label for="firstname">Name</label>
-        <input type="text" v-model="name" id='firstname' placeholder="Name">
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" v-model="email" id='email' placeholder="Email">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input autocomplete="off" :type="type" v-model="password" placeholder="Password" id='password'>
-        <button @click.prevent="toggleVisibility()">{{ btnText }}</button>
-      </div>
-      <button @click.prevent.stop="postRegister()">Register</button>
-    </form>
+<template>
+  <form ref='form' class='register-form'>
+    <h2>Registration</h2>
+    <div class="form-group" >
+      <label for="firstname">Name</label>
+      <input type="text" v-model="name" id='firstname' placeholder="Name">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" v-model="email" id='email' placeholder="Email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input autocomplete="off" :type="type" v-model="password" placeholder="Password" id='password'>
+      <button @click.prevent="toggleVisibility()">{{ btnText }}</button>
+    </div>
+    <button @click.prevent.stop="postRegister()">Register</button>
+  </form>
 </template>
 
-
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 export default {
-  name: "Register",
+  name: 'Register',
 
-  data() {
+  data () {
     return {
       name: '',
       email: '',
       password: '',
       btnText: 'show',
-      type: 'password',
+      type: 'password'
     }
   },
 
   methods: {
-    postRegister() {
-      let self = this;
+    postRegister () {
+      const self = this
       axios.post('http://127.0.0.1:8000/api/register', {
         name: this.name,
         email: this.email,
         password: this.password
       })
-          .then(function (response) {
-            console.log(response);
-            const token = localStorage.setItem('token', response.data.access_token);
-            self.$store.commit('auth_success', {token: token, status: "success"});
-            self.$router.push('/');
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      //console.log(localStorage.getItem('token'));
+        .then(function (response) {
+          console.log(response)
+          const token = localStorage.setItem('token', response.data.access_token)
+          self.$store.commit('auth_success', { token: token, status: 'success' })
+          self.$router.push('/')
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+      // console.log(localStorage.getItem('token'));
     },
 
-    toggleVisibility() {
+    toggleVisibility () {
       if (this.type === 'password') {
         this.type = 'text'
         this.btnText = 'hide'
@@ -63,7 +62,7 @@ export default {
         this.type = 'password'
         this.btnText = 'show'
       }
-    },
+    }
   }
 }
 </script>
@@ -130,5 +129,4 @@ input {
   padding:.4em;
   flex:1.5;
 }
-
 </style>

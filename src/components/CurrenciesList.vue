@@ -1,39 +1,37 @@
 <template>
-<div id="list">
-  <LogoutButton/>
-  <div>
-    <CurrencyPane class="pane" v-for="curr of currencies" :key="curr.CoinInfo.Id"
-                  :curr="curr"></CurrencyPane>
+  <div id="list">
+    <LogoutButton/>
+    <div>
+      <CurrencyPane class="pane" v-for="curr of currencies" :key="curr.CoinInfo.Id"
+                    :curr="curr"></CurrencyPane>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import CurrencyPane from "./CurrencyPane";
-import LogoutButton from "./LogoutButton";
-import axios from "axios";
+import CurrencyPane from './CurrencyPane'
+import LogoutButton from './LogoutButton'
+import axios from 'axios'
 
 export default {
-  name: "CurrenciesList",
-  components: {CurrencyPane, LogoutButton},
+  name: 'CurrenciesList',
+  components: { CurrencyPane, LogoutButton },
 
-
-  data() {
+  data () {
     return {
-      currencies: [],
+      currencies: []
     }
   },
 
-  mounted() {
+  mounted () {
     axios
-        .get('https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD')
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.currencies = response.data.Data
-          console.log(this.currencies)
-        })
-  },
-
+      .get('https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.currencies = response.data.Data
+        console.log(this.currencies)
+      })
+  }
 }
 </script>
 

@@ -7,8 +7,8 @@
 
 <script>
 export default {
-  name: "CurrencyName",
-  props: ["image", "name", "fullName"]
+  name: 'CurrencyName',
+  props: ['image', 'name', 'fullName']
 }
 </script>
 
