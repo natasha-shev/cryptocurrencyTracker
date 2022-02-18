@@ -40,13 +40,5 @@ export default {
 </script>
 
 <style scoped>
-#list {
-  display: flex;
-  justify-content: center;
-}
-.pane {
-  margin-bottom: 25px;
-  margin-top: 25px;
-  border: 10px solid;
-}
+
 </style>

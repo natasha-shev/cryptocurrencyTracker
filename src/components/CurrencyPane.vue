@@ -1,10 +1,15 @@
 <template>
-<div>
-<!--  будем использовать v-card??-->
-  <CurrencyName :CoinInfo="curr.CoinInfo"/>
-  <div>$ {{curr.RAW.USD.PRICE}}</div>
-  <div>Last update: {{upd}} hours ago</div>
-</div>
+  <v-card tile outlined
+    max-width="344">
+    <CurrencyName :CoinInfo="curr.CoinInfo"/>
+    <v-card-title class="justify-center">
+      $ {{curr.RAW.USD.PRICE}}
+    </v-card-title>
+
+    <v-card-subtitle class="justify-center d-flex">
+      здесь будет другая инфа {{upd}}
+    </v-card-subtitle>
+  </v-card>
 </template>
 
 <script>

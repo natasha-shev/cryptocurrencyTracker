@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-card class="primary" tile>
     <img :src = "'https://www.cryptocompare.com/' + CoinInfo.ImageUrl">
     <strong id="names">{{CoinInfo.Name}} | {{CoinInfo.FullName}}</strong>
-  </div>
+  </v-card>
 </template>
 
 <script>
