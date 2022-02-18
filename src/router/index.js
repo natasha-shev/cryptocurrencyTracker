@@ -11,6 +11,7 @@ const routes = [
   {
     path: '/',
     component: CurrenciesList,
+    name: 'Home',
     meta: { requiresAuth: true }
   },
   {
@@ -29,7 +30,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.getters.isLoggedIn) next('/login')
-  else if (!to.meta.requiresAuth && store.getters.isLoggedIn) next('/')
+  else if (!to.meta.requiresAuth && store.getters.isLoggedIn) next({ name: 'Home' })
   else next()
 })
 
