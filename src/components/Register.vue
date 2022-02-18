@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="/login">Login</router-link>
+    <router-link to="/login"><v-btn>Login</v-btn></router-link>
   <form ref='form' class='register-form'>
     <h2>Registration</h2>
     <div class="form-group" >
@@ -14,7 +14,9 @@
     <div class="form-group">
       <label for="password">Password</label>
       <input autocomplete="off" :type="type" v-model="password" placeholder="Password" id='password'>
-      <button @click.prevent="toggleVisibility()">{{ btnText }}</button>
+      <v-btn depressed flat color="white" @click.prevent="toggleVisibility()">
+        <v-icon>{{ icon }}</v-icon>
+      </v-btn>
     </div>
     <button @click.prevent.stop="postRegister()">Register</button>
   </form>
@@ -23,6 +25,7 @@
 
 <script>
 import axios from 'axios'
+import { mdiEye, mdiEyeOff } from '@mdi/js'
 
 export default {
   name: 'Register',
@@ -33,7 +36,8 @@ export default {
       email: '',
       password: '',
       btnText: 'show',
-      type: 'password'
+      type: 'password',
+      icon: mdiEye
     }
   },
 
@@ -60,10 +64,10 @@ export default {
     toggleVisibility () {
       if (this.type === 'password') {
         this.type = 'text'
-        this.btnText = 'hide'
+        this.icon = mdiEyeOff
       } else {
         this.type = 'password'
-        this.btnText = 'show'
+        this.icon = mdiEye
       }
     }
   }

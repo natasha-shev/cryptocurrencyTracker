@@ -12,11 +12,11 @@
               <input autocomplete="off" type="password" v-model="password" class="form-control">
             </div>
             <div class="mb-3">
-              <button v-on:click="postLogin()">Login</button>
+              <v-btn v-on:click="postLogin()">Login</v-btn>
             </div>
           </div>
           <router-link to="/register">
-            <button>Registration</button>
+            <v-btn>Registration</v-btn>
           </router-link>
           <!--          <div class="success-data" v-else>-->
           <!--            <div class="text-center d-flex flex-column"> <i class='bx bxs-badge-check'></i> <span class="text-center fs-1">You have been logged in <br> Successfully</span> </div>-->
