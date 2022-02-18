@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <router-link to="/login">Login</router-link>
   <form ref='form' class='register-form'>
     <h2>Registration</h2>
     <div class="form-group" >
@@ -16,6 +18,7 @@
     </div>
     <button @click.prevent.stop="postRegister()">Register</button>
   </form>
+  </div>
 </template>
 
 <script>
