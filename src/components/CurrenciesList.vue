@@ -1,6 +1,5 @@
 <template>
   <div id="list">
-    <LogoutButton/>
     <div>
       <CurrencyPane class="pane" v-for="curr of currencies" :key="curr.CoinInfo.Id"
                     :curr="curr"></CurrencyPane>
@@ -10,12 +9,11 @@
 
 <script>
 import CurrencyPane from './CurrencyPane'
-import LogoutButton from './LogoutButton'
 import axios from 'axios'
 
 export default {
   name: 'CurrenciesList',
-  components: { CurrencyPane, LogoutButton },
+  components: { CurrencyPane },
 
   data () {
     return {

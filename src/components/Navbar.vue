@@ -2,20 +2,25 @@
   <v-app-bar
     app
     color="primary"
-    dark
   >
     <div class="d-flex align-center">
-      <strong>Cryptocurrency App</strong>
+      <strong >Cryptocurrency App</strong>
     </div>
-
-    <!--      <v-spacer></v-spacer>-->
-
+    <v-spacer></v-spacer>
+    <div v-if="this.$store.getters.isLoggedIn">
+      <LogoutButton/>
+    </div>
   </v-app-bar>
 </template>
 
 <script>
+import LogoutButton from './LogoutButton'
+
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  components: {
+    LogoutButton
+  }
 }
 </script>
 
