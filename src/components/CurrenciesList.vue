@@ -1,10 +1,16 @@
 <template>
-  <div id="list">
-    <div>
-      <CurrencyPane class="pane" v-for="curr of currencies" :key="curr.CoinInfo.Id"
-                    :curr="curr"></CurrencyPane>
-    </div>
-  </div>
+      <v-container>
+        <v-responsive width="80%" class="ml-auto mr-auto">
+        <v-row>
+          <v-col cols="4" class="d-flex justify-center align-content-center"
+            v-for="(curr) of currencies" :key="curr.CoinInfo.Id">
+            <v-responsive width="75%">
+              <CurrencyPane class="pane mb-0"  :curr="curr"></CurrencyPane>
+            </v-responsive>
+          </v-col>
+        </v-row>
+        </v-responsive>
+      </v-container>
 </template>
 
 <script>
