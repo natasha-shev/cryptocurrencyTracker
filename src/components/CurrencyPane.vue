@@ -1,6 +1,7 @@
 <template>
 <div>
-  <CurrencyName :image="curr.CoinInfo.ImageUrl" :name="curr.CoinInfo.Name" :full-name="curr.CoinInfo.FullName"/>
+<!--  будем использовать v-card??-->
+  <CurrencyName :CoinInfo="curr.CoinInfo"/>
   <div>$ {{curr.RAW.USD.PRICE}}</div>
   <div>Last update: {{upd}} hours ago</div>
 </div>

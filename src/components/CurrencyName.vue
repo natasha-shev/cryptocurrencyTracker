@@ -1,14 +1,14 @@
 <template>
   <div>
-    <img :src = "'https://www.cryptocompare.com/' + image">
-    <strong id="names">{{name}} | {{fullName}}</strong>
+    <img :src = "'https://www.cryptocompare.com/' + CoinInfo.ImageUrl">
+    <strong id="names">{{CoinInfo.Name}} | {{CoinInfo.FullName}}</strong>
   </div>
 </template>
 
 <script>
 export default {
   name: 'CurrencyName',
-  props: ['image', 'name', 'fullName']
+  props: ['CoinInfo']
 }
 </script>
 
