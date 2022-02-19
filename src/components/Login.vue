@@ -1,30 +1,38 @@
 <template>
-  <div class="container mt-5">
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-6">
-        <div class="card px-5 py-5" id="form1">
-          <div class="form-data">
-            <!--            <div class="form-data" v-if="!submitted">-->
-            <div class="forms-inputs mb-4"> <span>Email</span>
-              <input  type="email" v-model="email" class="form-control">
-            </div>
-            <div class="forms-inputs mb-4"> <span>Password</span>
-              <input autocomplete="off" type="password" v-model="password" class="form-control">
-            </div>
-            <div class="mb-3">
-              <v-btn v-on:click="postLogin()">Login</v-btn>
-            </div>
-          </div>
-          <router-link to="/register">
-            <v-btn>Registration</v-btn>
-          </router-link>
-          <!--          <div class="success-data" v-else>-->
-          <!--            <div class="text-center d-flex flex-column"> <i class='bx bxs-badge-check'></i> <span class="text-center fs-1">You have been logged in <br> Successfully</span> </div>-->
-          <!--          </div>-->
+  <v-container>
+    <v-responsive width="40%" class="ml-auto mr-auto">
+    <v-form>
+      <v-text-field v-model="email"
+                    label="Email"
+                    :rules="mailRules"
+                    hide-details="auto"
+                    ref="emailField"
+      ></v-text-field>
+      <v-text-field v-model="password"
+                    label="Password"
+                    type="password"
+                    :rules="passRules"
+                    ref="passField"
+      ></v-text-field>
+      <div  class="error--text">
+        {{loginError}}
+      </div>
+    </v-form>
+    </v-responsive>
+    <div class="mt-3 mb-3 d-flex d-flex justify-center">
+      <v-btn v-on:click="postLogin()">Login</v-btn>
+    </div>
+    <div class="d-flex justify-center">
+      <div class="mt-3 mb-3 d-flex flex-column">
+        <div>
+          Don't have an account?
         </div>
+        <router-link class="d-flex justify-center" style="text-decoration: none" to="/register">
+          <v-btn text color="#3d87d1">Sign up</v-btn>
+        </router-link>
       </div>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -36,12 +44,27 @@ export default {
   data () {
     return {
       password: '',
-      email: ''
+      email: '',
+      mailRules: [
+        value => !!value || 'Required.'
+      ],
+      passRules: [
+        value => !!value || 'Required.'
+      ],
+      loginError: ''
     }
   },
 
   methods: {
     postLogin () {
+      if (this.email === '') {
+        this.$refs.emailField.focus()
+        return
+      }
+      if (this.password === '') {
+        this.$refs.passField.focus()
+        return
+      }
       const self = this
       axios.post('http://127.0.0.1:8000/api/login', {
         email: this.email,
@@ -54,9 +77,24 @@ export default {
           self.$router.push('/')
         })
         .catch(function (error) {
-          console.log(error)
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data)
+            console.log(error.response.status)
+            console.log(error.response.headers)
+            self.loginError = error.response.data.message
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request)
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message)
+          }
+          console.log(error.config)
         })
-      // console.log(localStorage.getItem('token'))
     }
   }
 }
