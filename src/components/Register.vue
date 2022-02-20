@@ -1,26 +1,55 @@
 <template>
-  <div>
-    <router-link to="/login"><v-btn>Login</v-btn></router-link>
-  <form ref='form' class='register-form'>
-    <h2>Registration</h2>
-    <div class="form-group" >
-      <label for="firstname">Name</label>
-      <input type="text" v-model="name" id='firstname' placeholder="Name">
+  <v-container>
+    <v-responsive width="45%" class="ml-auto mr-auto">
+  <v-form>
+    <h1 class="font-weight-light d-flex justify-center">Registration</h1>
+    <div>
+      <v-text-field v-model="name"
+                    label="Name"
+                    :rules="rules"
+                    hide-details="auto"
+                    ref="nameField"
+      ></v-text-field>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" v-model="email" id='email' placeholder="Email">
+    <div>
+      <v-text-field v-model="email"
+                    label="Email"
+                    :rules="rules"
+                    hide-details="auto"
+                    ref="emailField"
+      ></v-text-field>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input autocomplete="off" :type="type" v-model="password" placeholder="Password" id='password'>
-      <v-btn depressed flat color="white" @click.prevent="toggleVisibility()">
-        <v-icon>{{ icon }}</v-icon>
-      </v-btn>
+    <div class="d-flex flex-row mb-3 align-end">
+        <v-text-field v-model="password"
+                      label="Password"
+                      :rules="rules"
+                      :type="type"
+                      hide-details="auto"
+                      ref="passField"
+        ></v-text-field>
+        <v-btn tile depressed color="white" @click.prevent="toggleVisibility()">
+          <v-icon>{{ icon }}</v-icon>
+        </v-btn>
     </div>
-    <button @click.prevent.stop="postRegister()">Register</button>
-  </form>
-  </div>
+    <div  class="error--text">
+      {{regError.join(' ')}}
+    </div>
+  </v-form>
+    </v-responsive>
+    <div class="mt-3 mb-3 d-flex d-flex justify-center">
+      <v-btn @click.prevent.stop="postRegister()">Sign up</v-btn>
+    </div>
+    <div class="d-flex justify-center">
+      <div class="mt-3 mb-3 d-flex flex-column">
+        <div>
+          Have an account?
+        </div>
+        <router-link class="d-flex justify-center" style="text-decoration: none" to="/login">
+          <v-btn text color="#3d87d1">log in</v-btn>
+        </router-link>
+      </div>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -35,14 +64,29 @@ export default {
       name: '',
       email: '',
       password: '',
-      btnText: 'show',
       type: 'password',
-      icon: mdiEye
+      icon: mdiEye,
+      rules: [
+        value => !!value || 'Required.'
+      ],
+      regError: []
     }
   },
 
   methods: {
     postRegister () {
+      if (this.name === '') {
+        this.$refs.nameField.focus()
+        return
+      }
+      if (this.email === '') {
+        this.$refs.emailField.focus()
+        return
+      }
+      if (this.password === '') {
+        this.$refs.passField.focus()
+        return
+      }
       const self = this
       axios.post('http://127.0.0.1:8000/api/register', {
         name: this.name,
@@ -56,9 +100,24 @@ export default {
           self.$router.push('/')
         })
         .catch(function (error) {
-          console.log(error)
+          if (error.response) {
+            console.log(error.response.data)
+            console.log(error.response.status)
+            console.log(error.response.headers)
+            if (error.response.data.error.email) {
+              self.regError.push(error.response.data.error.email[0])
+            }
+            if (error.response.data.error.password) {
+              self.regError.push(error.response.data.error.password[0])
+              // error.response.data.error.password.forEach(item => self.regError += item)
+            }
+          } else if (error.request) {
+            console.log(error.request)
+          } else {
+            console.log('Error', error.message)
+          }
+          console.log(error.config)
         })
-      // console.log(localStorage.getItem('token'));
     },
 
     toggleVisibility () {
@@ -75,65 +134,5 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-[v-cloak] {
-  opacity: 0;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-  font-family: 'PT Sans', sans-serif;
-  background:#e0e0e0;
-}
-
-button {
-  transition: 250ms;
-  display: block;
-  margin: 2em 0 2em auto;
-  padding: .6em 1em;
-  font-size: inherit;
-  cursor: pointer;
-  color:white;
-  border:none;
-  background-color: #32a860;
-}
-
-form h2, header h2 {
-  text-align: center;
-}
-
-.register-form {
-  margin: 2em 0;
-  padding:1em;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px;
-}
-
-label {
-  flex:1;
-  text-align: right;
-  margin-right: 2em;
-}
-
-input {
-  font-size: inherit;
-  border:none;
-  background:whitesmoke;
-  font-family:inherit;
-  padding:.4em;
-  flex:1.5;
-}
 </style>
