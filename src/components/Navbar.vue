@@ -4,7 +4,7 @@
     color="primary"
   >
     <div class="d-flex align-center">
-      <strong >Cryptocurrency App</strong>
+      <v-toolbar-title>Cryptocurrency App</v-toolbar-title>
     </div>
     <v-spacer></v-spacer>
     <div v-if="this.$store.getters.isLoggedIn">

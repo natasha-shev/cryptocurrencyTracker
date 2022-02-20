@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-responsive width="40%" class="ml-auto mr-auto">
+    <v-responsive width="45%" class="ml-auto mr-auto">
     <v-form>
       <v-text-field v-model="email"
                     label="Email"
