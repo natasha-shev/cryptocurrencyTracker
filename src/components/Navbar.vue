@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import LogoutButton from './LogoutButton'
+import LogoutButton from './LogoutButton';
 
 export default {
   name: 'Navbar',
   components: {
     LogoutButton
   }
-}
+};
 </script>
 
 <style scoped>

@@ -8,12 +8,12 @@
 export default {
   name: 'LogoutButton',
   methods: {
-    logout () {
-      localStorage.removeItem('token')
-      this.$store.commit('logout')
+    logout() {
+      localStorage.removeItem('token');
+      this.$store.commit('logout');
     }
   }
-}
+};
 </script>
 
 <style scoped>
