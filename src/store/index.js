@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token'), // || '',
-    user: {}
+    user: {},
+    favourites: []
   },
   mutations: {
     auth_success(state, token) {
@@ -21,6 +22,15 @@ export default new Vuex.Store({
     logout(state) {
       state.status = '';
       state.token = '';
+    },
+    fetch_favourites(state, coins) {
+      state.favourites = coins;
+    },
+    add_favourite(state, coin) {
+      state.favourites.push(coin);
+    },
+    remove_favourite(state, coin) {
+      state.favourites.splice(state.favourites.indexOf(coin), 1);
     }
   },
   actions: {
@@ -28,7 +38,8 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
-    isLoggedIn: state => !!state.token // !!null == false
+    isLoggedIn: state => !!state.token,
+    isFavourite: (state) => (coin) => !(state.favourites.indexOf(coin) === -1)
     // authStatus: state => state.status, //разобраться это вообще зачем у них в примере былооо
   }
 });
