@@ -2,7 +2,7 @@
   <v-container>
     <v-responsive width="80%" class="ml-auto mr-auto">
       <v-row>
-        <v-col v-for="(curr) of currencies" :key="curr.CoinInfo.Id"
+        <v-col v-for="(curr) of currencies" :key="curr.id"
                cols="4" class="d-flex justify-center align-content-center"
         >
           <v-responsive width="75%">
@@ -30,10 +30,10 @@ export default {
 
   mounted() {
     axios
-      .get('https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD')
+      .get('http://127.0.0.1:8000/api/coins')
       .then(response => {
         // JSON responses are automatically parsed.
-        this.currencies = response.data.Data;
+        this.currencies = response.data;
         console.log(this.currencies);
       });
   }

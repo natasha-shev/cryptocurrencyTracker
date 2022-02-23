@@ -2,13 +2,13 @@
   <v-card tile outlined
           max-width="344"
   >
-    <CurrencyName :coin-info="curr.CoinInfo" />
+    <CurrencyName :curr="curr" />
     <v-card-title class="justify-center">
-      $ {{ curr.RAW.USD.PRICE }}
+      $ {{ curr.price_usd }}
     </v-card-title>
 
     <v-card-subtitle class="justify-center d-flex">
-      здесь будет другая инфа {{ upd }}
+      здесь может быть другая инфа
     </v-card-subtitle>
   </v-card>
 </template>
@@ -22,11 +22,6 @@ export default {
     CurrencyName
   },
   props: ['curr'],
-  data() {
-    return {
-      upd: new Date(Date.now() - this.curr.RAW.USD.LASTUPDATE).getHours()
-    };
-  }
 };
 </script>
 

@@ -1,15 +1,22 @@
 <template>
   <v-card class="primary" tile>
-    <img :src = "'https://www.cryptocompare.com/' + CoinInfo.ImageUrl">
-    <strong id="names">{{CoinInfo.Name}} | {{CoinInfo.FullName}}</strong>
+    <img :src="curr.icon_url">
+    <strong id="names">{{ curr.name }} | {{ curr.full_name }}</strong>
+    <v-spacer />
+    <v-btn
+      icon
+      color="#fcad03"
+    >
+      <v-icon>mdi-star</v-icon>
+    </v-btn>
   </v-card>
 </template>
 
 <script>
 export default {
   name: 'CurrencyName',
-  props: ['CoinInfo']
-}
+  props: ['curr'] // Add to favourites
+};
 </script>
 
 <style scoped>
