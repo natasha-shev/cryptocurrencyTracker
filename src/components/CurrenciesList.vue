@@ -2,7 +2,7 @@
   <v-container>
     <v-responsive width="80%" class="ml-auto mr-auto">
       <v-row>
-        <v-col v-for="(curr) of currencies" :key="curr.id"
+        <v-col v-for="(curr) of myCurrencies" :key="curr.id"
                cols="4" class="d-flex justify-center align-content-center"
         >
           <v-responsive width="75%">
@@ -24,17 +24,19 @@ export default {
 
   data() {
     return {
-      currencies: []
+      myCurrencies: []
     };
   },
 
   mounted() {
     axios
-      .get('http://127.0.0.1:8000/api/coins')
+      .get('http://127.0.0.1:8000/api/fav', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
       .then(response => {
-        // JSON responses are automatically parsed.
-        this.currencies = response.data;
-        console.log(this.currencies);
+        this.myCurrencies = response.data;
       });
   }
 };
