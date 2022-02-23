@@ -30,7 +30,7 @@ export default new Vuex.Store({
       state.favourites.push(coin);
     },
     remove_favourite(state, coin) {
-      state.favourites.splice(state.favourites.indexOf(coin), 1);
+      state.favourites.splice(state.favourites.findIndex(fav => fav.id === coin.id), 1);
     }
   },
   actions: {
@@ -39,7 +39,8 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: state => !!state.token,
-    isFavourite: (state) => (coin) => !(state.favourites.indexOf(coin) === -1)
-    // authStatus: state => state.status, //разобраться это вообще зачем у них в примере былооо
+    isFavourite: (state) => (coin) => {
+      return state.favourites.filter(fav => fav.id === coin.id).length;
+    }
   }
 });
