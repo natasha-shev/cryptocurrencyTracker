@@ -7,8 +7,19 @@
       <v-toolbar-title>Cryptocurrency App</v-toolbar-title>
     </div>
     <v-spacer></v-spacer>
+    <div v-if="this.$route.name == 'Home'">
+      <router-link to="/all" style="text-decoration: none">
+        <v-btn depressed>All coins</v-btn>
+      </router-link>
+    </div>
+    <div v-if="this.$route.name == 'All'">
+      <router-link to="/" style="text-decoration: none">
+        <v-btn depressed>My coins</v-btn>
+      </router-link>
+    </div>
+    <v-spacer></v-spacer>
     <div v-if="this.$store.getters.isLoggedIn">
-      <LogoutButton/>
+      <LogoutButton />
     </div>
   </v-app-bar>
 </template>

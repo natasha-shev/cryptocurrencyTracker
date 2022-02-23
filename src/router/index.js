@@ -4,6 +4,7 @@ import CurrenciesList from '../components/CurrenciesList.vue';
 import Login from '../components/Login';
 import Register from '../components/Register';
 import store from '../store';
+import AllCurrenciesList from '../components/AllCurrenciesList';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,12 @@ const routes = [
   {
     path: '/register',
     component: Register
+  },
+  {
+    path: '/all',
+    component: AllCurrenciesList,
+    name: 'All',
+    meta: { requiresAuth: true }
   }
 ];
 
