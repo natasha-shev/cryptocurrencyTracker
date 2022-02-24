@@ -1,38 +1,67 @@
 <template>
-  <v-container>
-    <v-responsive width="45%" class="ml-auto mr-auto">
-      <v-form>
-        <v-text-field ref="emailField"
-                      v-model="email"
-                      label="Email"
-                      :rules="mailRules"
-                      hide-details="auto"
-        ></v-text-field>
-        <v-text-field ref="passField"
-                      v-model="password"
-                      label="Password"
-                      type="password"
-                      :rules="passRules"
-        ></v-text-field>
-        <div class="error--text">
-          {{ loginError }}
+  <div>
+    <v-btn
+      @click.stop="dialog = true"
+    >
+      Login
+    </v-btn>
+
+    <v-dialog
+      v-model="dialog"
+      max-width="390"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          Sign in to app
+        </v-card-title>
+
+        <v-card-text>
+          <v-form>
+            <v-text-field ref="emailField"
+                          v-model="email"
+                          label="Email"
+                          :rules="rules"
+                          hide-details="auto"
+            ></v-text-field>
+            <v-text-field ref="passField"
+                          v-model="password"
+                          label="Password"
+                          type="password"
+                          :rules="rules"
+            ></v-text-field>
+            <div class="error--text">
+              {{ loginError }}
+            </div>
+          </v-form>
+        </v-card-text>
+        <div class="d-flex justify-center">
+          <div class="mt-3 mb-3 d-flex flex-column">
+            <div>
+              Don't have an account?
+            </div>
+            <router-link class="d-flex justify-center" style="text-decoration: none" to="/register">
+              <v-btn @click="dialog = false" text color="#3d87d1">Sign up</v-btn>
+            </router-link>
+          </div>
         </div>
-      </v-form>
-    </v-responsive>
-    <div class="mt-3 mb-3 d-flex d-flex justify-center">
-      <v-btn @click="postLogin()">Login</v-btn>
-    </div>
-    <div class="d-flex justify-center">
-      <div class="mt-3 mb-3 d-flex flex-column">
-        <div>
-          Don't have an account?
-        </div>
-        <router-link class="d-flex justify-center" style="text-decoration: none" to="/register">
-          <v-btn text color="#3d87d1">Sign up</v-btn>
-        </router-link>
-      </div>
-    </div>
-  </v-container>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            @click="dialog = false"
+          >
+            Close
+          </v-btn>
+
+          <v-btn
+            @click="postLogin()"
+          >
+            Login
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -43,12 +72,10 @@ export default {
 
   data() {
     return {
+      dialog: false,
       password: '',
       email: '',
-      mailRules: [
-        value => !!value || 'Required.'
-      ],
-      passRules: [
+      rules: [
         value => !!value || 'Required.'
       ],
       loginError: ''

@@ -16,18 +16,13 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/login',
-    component: Login
-  },
-  {
     path: '/register',
     component: Register
   },
   {
     path: '/all',
     component: AllCurrenciesList,
-    name: 'All',
-    meta: { requiresAuth: true }
+    name: 'All'
   }
 ];
 
@@ -36,7 +31,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.getters.isLoggedIn) { next('/login'); } else if (!to.meta.requiresAuth && store.getters.isLoggedIn) { next({ name: 'Home' }); } else { next(); }
+  if (to.meta.requiresAuth && !store.getters.isLoggedIn) { next('/all'); } else if (!to.meta.requiresAuth && store.getters.isLoggedIn) { next({ name: 'Home' }); } else { next(); }
 });
 
 export default router;
