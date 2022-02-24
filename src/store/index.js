@@ -26,6 +26,14 @@ export default new Vuex.Store({
     fetch_favourites(state, coins) {
       state.favourites = coins;
     },
+    fetch_favourites_from_all(state, coins) {
+      state.favourites = [];
+      coins.forEach(function (coin) {
+        if (coin.user_id != null) {
+          state.favourites.push(coin);
+        }
+      });
+    },
     add_favourite(state, coin) {
       state.favourites.push(coin);
     },

@@ -18,11 +18,6 @@ import axios from 'axios';
 export default {
   name: 'CurrencyName',
   props: ['curr'],
-  // data() {
-  //   return {
-  //     favBtnColor: ''
-  //   };
-  // },
   computed: {
       favBtnColor() {
         return this.$store.getters.isFavourite(this.curr)? '#fcad03' : 'white'; // statement if....
@@ -30,15 +25,12 @@ export default {
   },
   methods: {
     addToFavourites() {
-      //this.favBtnColor = this.favBtnColor === 'white' ? '#fcad03' : 'white';
       axios
         .post('http://127.0.0.1:8000/api/favourite/' + this.curr.id, {}, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         }).then(response => {
-        // console.log(response.data);
-        //console.log(this.$store.getters.isFavourite(this.curr));
       });
 
       if (this.$store.getters.isFavourite(this.curr)) {
@@ -48,10 +40,6 @@ export default {
       }
     }
    }
-   // mounted() {
-   //   // this.favBtnColor()
-   //   this.favBtnColor = this.$store.getters.isFavourite(this.curr)? '#fcad03' : 'white';
-   // }
 };
 </script>
 

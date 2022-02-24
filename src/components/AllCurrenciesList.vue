@@ -30,10 +30,14 @@ export default {
 
   mounted() {
     axios
-      .get('http://127.0.0.1:8000/api/coins')
+      .get('http://127.0.0.1:8000/api/coins', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
       .then(response => {
         this.currencies = response.data;
-        console.log(this.$route.name);
+        this.$store.commit('fetch_favourites_from_all', this.currencies);
       });
   }
 };
