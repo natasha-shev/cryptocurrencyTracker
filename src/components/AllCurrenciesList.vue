@@ -37,7 +37,6 @@ export default {
       })
       .then(response => {
         this.currencies = response.data;
-        this.$store.commit('fetch_favourites_from_all', this.currencies);
       });
   }
 };

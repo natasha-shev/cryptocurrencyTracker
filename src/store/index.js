@@ -7,8 +7,7 @@ export default new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token'), // || '',
-    user: {},
-    favourites: []
+    user: {}
   },
   mutations: {
     auth_success(state, token) {
@@ -23,32 +22,12 @@ export default new Vuex.Store({
       state.status = '';
       state.token = '';
     },
-    fetch_favourites(state, coins) {
-      state.favourites = coins;
-    },
-    fetch_favourites_from_all(state, coins) {
-      state.favourites = [];
-      coins.forEach(function (coin) {
-        if (coin.user_id != null) {
-          state.favourites.push(coin);
-        }
-      });
-    },
-    add_favourite(state, coin) {
-      state.favourites.push(coin);
-    },
-    remove_favourite(state, coin) {
-      state.favourites.splice(state.favourites.findIndex(fav => fav.id === coin.id), 1);
-    }
   },
   actions: {
   },
   modules: {
   },
   getters: {
-    isLoggedIn: state => !!state.token,
-    isFavourite: (state) => (coin) => {
-      return state.favourites.filter(fav => fav.id === coin.id).length;
-    }
+    isLoggedIn: state => !!state.token
   }
 });

@@ -18,13 +18,14 @@ import axios from 'axios';
 export default {
   name: 'CurrencyName',
   props: ['curr'],
-  computed: {
-      favBtnColor() {
-        return this.$store.getters.isFavourite(this.curr)? '#fcad03' : 'white'; // statement if....
-      }
+  data() {
+      return {
+        favBtnColor: (this.curr.user_id || this.$route.name == 'Home')? '#fcad03' : 'white'
+      };
   },
   methods: {
     addToFavourites() {
+      this.favBtnColor = (this.favBtnColor == 'white')? '#fcad03' : 'white';
       axios
         .post('http://127.0.0.1:8000/api/favourite/' + this.curr.id, {}, {
           headers: {
@@ -32,12 +33,6 @@ export default {
           }
         }).then(response => {
       });
-
-      if (this.$store.getters.isFavourite(this.curr)) {
-        this.$store.commit('remove_favourite', this.curr);
-      } else {
-        this.$store.commit('add_favourite', this.curr);
-      }
     }
    }
 };
