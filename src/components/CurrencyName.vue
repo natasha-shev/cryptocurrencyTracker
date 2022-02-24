@@ -3,7 +3,8 @@
     <img :src="curr.icon_url">
     <strong id="names">{{ curr.name }} | {{ curr.full_name }}</strong>
     <v-spacer />
-    <v-btn icon
+    <v-btn v-if="this.$store.getters.isLoggedIn"
+           icon
            :color="favBtnColor"
            @click="addToFavourites"
     >
