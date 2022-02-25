@@ -22,8 +22,15 @@
         <LogoutButton />
       </div>
     </div>
-    <div v-else>
-      <Login></Login>
+    <div v-else >
+      <v-row justify="end">
+        <v-col>
+          <Login></Login>
+        </v-col>
+        <v-col>
+          <Register></Register>
+        </v-col>
+      </v-row>
     </div>
   </v-app-bar>
 </template>
@@ -31,10 +38,12 @@
 <script>
 import LogoutButton from './LogoutButton';
 import Login from './Login';
+import Register from './Register';
 
 export default {
   name: 'Navbar',
   components: {
+    Register,
     Login,
     LogoutButton
   },

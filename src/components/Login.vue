@@ -34,16 +34,7 @@
             </div>
           </v-form>
         </v-card-text>
-        <div class="d-flex justify-center">
-          <div class="mt-3 mb-3 d-flex flex-column">
-            <div>
-              Don't have an account?
-            </div>
-            <router-link class="d-flex justify-center" style="text-decoration: none" to="/register">
-              <v-btn @click="dialog = false" text color="#3d87d1">Sign up</v-btn>
-            </router-link>
-          </div>
-        </div>
+
         <v-card-actions>
           <v-spacer></v-spacer>
 
@@ -52,7 +43,6 @@
           >
             Close
           </v-btn>
-
           <v-btn
             @click="postLogin()"
           >
