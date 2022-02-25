@@ -10,13 +10,13 @@
     <v-spacer></v-spacer>
 
     <div v-if="this.$store.getters.isLoggedIn">
-      <div v-if="this.$route.name == 'Home'" class="ml-10">
-        <router-link to="/all" style="text-decoration: none">
+      <div v-if="this.$route.name == 'Fav'" class="ml-10">
+        <router-link to="/" style="text-decoration: none">
           <v-btn>All coins</v-btn>
         </router-link>
       </div>
-      <div v-if="this.$route.name == 'All'">
-        <router-link to="/" style="text-decoration: none">
+      <div v-if="this.$route.name == 'Home'">
+        <router-link to="/favourites" style="text-decoration: none">
           <v-btn>My coins</v-btn>
         </router-link>
       </div>

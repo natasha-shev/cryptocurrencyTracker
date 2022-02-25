@@ -93,7 +93,7 @@ export default {
           const token = localStorage.setItem('token', response.data.access_token);
 
           self.$store.commit('auth_success', { token: token, status: 'success' });
-          self.$router.push('/');
+          self.$router.push('/favourites');
         })
         .catch(function (error) {
           if (error.response) {

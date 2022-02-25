@@ -1,6 +1,6 @@
 <template>
-  <router-link to="/login" style="text-decoration: none">
-    <v-btn depressed @click="logout()">Logout</v-btn>
+  <router-link to="/" style="text-decoration: none">
+    <v-btn @click="logout()">Logout</v-btn>
   </router-link>
 </template>
 
