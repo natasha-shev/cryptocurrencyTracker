@@ -2,7 +2,7 @@
   <v-container>
     <v-responsive width="80%" class="ml-auto mr-auto">
       <v-row>
-        <v-col v-for="(curr) of myCurrencies" :key="curr.id"
+        <v-col v-for="(curr) of currencies" :key="curr.id"
                cols="4" class="d-flex justify-center align-content-center"
         >
           <v-responsive width="75%">
@@ -16,29 +16,11 @@
 
 <script>
 import CurrencyPane from './CurrencyPane';
-import axios from 'axios';
 
 export default {
   name: 'CurrenciesList',
   components: { CurrencyPane },
-
-  data() {
-    return {
-      myCurrencies: []
-    };
-  },
-
-  mounted() {
-    axios
-      .get('http://127.0.0.1:8000/api/fav', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      .then(response => {
-        this.myCurrencies = response.data;
-      });
-  }
+  props: ['currencies'],
 };
 </script>
 

@@ -1,20 +1,20 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import CurrenciesList from '../components/CurrenciesList.vue';
 import store from '../store';
-import AllCurrenciesList from '../components/AllCurrenciesList';
+import All from '../components/All';
+import Favourites from '../components/Favourites';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    component: AllCurrenciesList,
+    component: All,
     name: 'Home',
   },
   {
     path: '/favourites',
-    component: CurrenciesList,
+    component: Favourites,
     name: 'Fav',
     meta: { requiresAuth: true }
   }
