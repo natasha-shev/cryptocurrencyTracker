@@ -6,23 +6,29 @@
     <div class="d-flex align-center">
       <v-toolbar-title>Cryptocurrency App</v-toolbar-title>
     </div>
+
     <v-spacer></v-spacer>
-    <div v-if="this.$store.getters.isLoggedIn" class="d-inline-flex">
-      <div v-if="this.$route.name == 'Home'">
+
+    <div v-if="this.$store.getters.isLoggedIn">
+      <div v-if="this.$route.name == 'Home'" class="ml-10">
         <router-link to="/all" style="text-decoration: none">
-          <v-btn depressed>All coins</v-btn>
+          <v-btn>All coins</v-btn>
         </router-link>
       </div>
       <div v-if="this.$route.name == 'All'">
         <router-link to="/" style="text-decoration: none">
-          <v-btn depressed>My coins</v-btn>
+          <v-btn>My coins</v-btn>
         </router-link>
       </div>
-      <div>
-        <LogoutButton />
-      </div>
     </div>
-    <div v-else >
+
+    <v-spacer></v-spacer>
+
+    <div v-if="this.$store.getters.isLoggedIn">
+      <LogoutButton />
+    </div>
+
+    <div v-else>
       <v-row justify="end">
         <v-col>
           <Login></Login>
