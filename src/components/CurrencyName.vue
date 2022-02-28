@@ -21,7 +21,7 @@ export default {
   props: ['curr'],
   data() {
       return {
-        favBtnColor: (this.curr.user_id || this.$route.name == 'Fav')? '#fcad03' : 'white'
+        favBtnColor: (this.curr.user_id || this.$route.name == 'Portfolio')? '#fcad03' : 'white'
       };
   },
   methods: {

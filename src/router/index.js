@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
 import All from '../components/All';
-import Favourites from '../components/Favourites';
+import Portfolio from '../components/Portfolio';
 
 Vue.use(VueRouter);
 
@@ -13,9 +13,9 @@ const routes = [
     name: 'Home',
   },
   {
-    path: '/favourites',
-    component: Favourites,
-    name: 'Fav',
+    path: '/portfolio',
+    component: Portfolio,
+    name: 'Portfolio',
     meta: { requiresAuth: true }
   }
 ];
