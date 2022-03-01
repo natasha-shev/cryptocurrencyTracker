@@ -10,25 +10,53 @@
 
       <v-card-text>
         <v-form>
+
+          <v-combobox
+            v-model="coin"
+            :items="items"
+            label="Choose coin"
+          >
+            </v-combobox>
+
+
           <v-text-field v-model="amount"
                         label="Amount"
                         :rules="rules"
+                        :value="amount"
           ></v-text-field>
           <v-text-field v-model="buyPrice"
                         label="Buy price"
                         :rules="rules"
-                        filled
+                        :value="buyPrice"
           ></v-text-field>
-          <v-text-field v-model="buyDate"
-                        label="Bought on"
-                        :rules="rules"
-                        type="date"
-                        :value="buyDate"
-                        filled
-          >
-            <!--                          type="date"-->
-          </v-text-field>
 
+          <v-menu
+            ref="menu1"
+            v-model="menu1"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="dateFormatted"
+                label="Bought on"
+                hint="DD/MM/YYYY format"
+                persistent-hint
+                prepend-icon="mdi-calendar"
+                v-bind="attrs"
+                @blur="date = parseDate(dateFormatted)"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="date"
+              no-title
+              @input="menu1 = false"
+            ></v-date-picker>
+          </v-menu>
         </v-form>
       </v-card-text>
 
@@ -58,18 +86,25 @@ export default {
   data() {
     return {
       dialogLocal: false,
-      buyPrice: 0,
-      buyDate: 0,
+      coin: '',
+      buyPrice: 1,
       amount: 1,
       rules: [
         value => !!value || 'Required.'
-      ]
+      ],
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      dateFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
+      menu1: false,
+      items: ['Example1', 'Example2', 'Example3']
     };
   },
 
   watch: {
     dialog: function () {
       this.dialogLocal = !this.dialogLocal;
+    },
+    date() {
+      this.dateFormatted = this.formatDate(this.date);
     }
   },
 
@@ -79,6 +114,12 @@ export default {
     this.buyDate = ([today.getDate(), today.getMonth()+1, today.getFullYear()].join('-'));
   },
 
+  // computed: {
+  //   computedDateFormatted() {
+  //     return this.formatDate(this.date);
+  //   },
+  // },
+
   methods: {
     addCoin() {
       axios
@@ -86,7 +127,7 @@ export default {
           coinId: 1,
           amount: this.amount,
           buyPrice: this.buyPrice,
-          buyDate: this.buyDate,
+          buyDate: this.date,
         }, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -95,6 +136,20 @@ export default {
           console.log(response);
           this.dialogLocal = false;
       });
+    },
+    formatDate(date) {
+      if (!date) { return null; }
+
+      const [year, month, day] = date.split('-');
+
+      return `${day}/${month}/${year}`;
+    },
+    parseDate(date) {
+      if (!date) { return null; }
+
+      const [month, day, year] = date.split('/');
+
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
   }
 };
