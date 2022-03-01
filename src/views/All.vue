@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CurrenciesList from './CurrenciesList';
+import CurrenciesList from '../components/CurrenciesList';
 import getCoinsList from '../api';
 export default {
   name: 'All',

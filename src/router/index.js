@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
-import All from '../components/All';
-import Portfolio from '../components/Portfolio';
+import All from '../views/All';
+import Portfolio from '../views/Portfolio';
 
 Vue.use(VueRouter);
 

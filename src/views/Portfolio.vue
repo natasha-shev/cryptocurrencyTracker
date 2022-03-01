@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import CurrenciesList from './CurrenciesList';
+import CurrenciesList from '../components/CurrenciesList';
 import getCoinsList from '../api';
-import AddCoinDialog from './AddCoinDialog';
+import AddCoinDialog from '../components/AddCoinDialog';
 export default {
   name: 'Favourites',
   components: { AddCoinDialog, CurrenciesList },
