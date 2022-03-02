@@ -4,7 +4,7 @@
 
 <script>
 import CurrenciesList from '../components/CurrenciesList';
-import getCoinsList from '../api';
+import api from '../api';
 export default {
   name: 'All',
   components: { CurrenciesList },
@@ -16,7 +16,7 @@ export default {
   },
 
   created() {
-    getCoinsList(false).then(response => { this.currencies = response.data; });
+    api.getCoinsList(false).then(response => { this.currencies = response.data; });
   }
 };
 </script>

@@ -10,13 +10,13 @@
 
       <v-card-text>
         <v-form>
-
           <v-combobox
-            v-model="coin"
+            v-model="coin.full_name"
             :items="items"
             label="Choose coin"
+            :value="coin.full_name"
           >
-            </v-combobox>
+          </v-combobox>
 
 
           <v-text-field v-model="amount"
@@ -28,6 +28,7 @@
                         label="Buy price"
                         :rules="rules"
                         :value="buyPrice"
+                        prefix="$"
           ></v-text-field>
 
           <v-menu
@@ -77,11 +78,11 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '../api';
 
 export default {
   name: 'AddCoinDialog',
-  props: ['dialog'],
+  props: ['dialog', 'curr'],
 
   data() {
     return {
@@ -112,6 +113,11 @@ export default {
     let today = new Date();
 
     this.buyDate = ([today.getDate(), today.getMonth()+1, today.getFullYear()].join('-'));
+    if (this.curr) {
+      this.coin = {...this.curr};
+      this.items.push(this.coin.full_name);
+      this.buyPrice = this.coin.price_usd;
+    }
   },
 
   // computed: {
@@ -122,21 +128,13 @@ export default {
 
   methods: {
     addCoin() {
-      axios
-        .post('http://127.0.0.1:8000/api/favourites', {
-          coinId: 1,
-          amount: this.amount,
-          buyPrice: this.buyPrice,
-          buyDate: this.date,
-        }, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        }).then(response => {
-          console.log(response);
-          this.dialogLocal = false;
+      api.addCoin(this.coin.id, this.amount, this.buyPrice, this.date)
+      .then(response => {
+        console.log(response);
+        this.dialogLocal = false;
       });
     },
+
     formatDate(date) {
       if (!date) { return null; }
 
@@ -144,6 +142,7 @@ export default {
 
       return `${day}/${month}/${year}`;
     },
+
     parseDate(date) {
       if (!date) { return null; }
 

@@ -18,4 +18,19 @@ function getCoinsList(fav = false) {
   }
 }
 
-export default getCoinsList;
+function addCoin(coinId, amount, buyPrice, buyDate) {
+  return axios
+    .post('http://127.0.0.1:8000/api/favourites', {
+      coinId: coinId,
+      amount: amount,
+      buyPrice: buyPrice,
+      buyDate: buyDate,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+}
+
+//export default getCoinsList;
+export default {getCoinsList, addCoin};

@@ -14,7 +14,7 @@
 
 <script>
 import CurrenciesList from '../components/CurrenciesList';
-import getCoinsList from '../api';
+import api from '../api';
 import AddCoinDialog from '../components/AddCoinDialog';
 export default {
   name: 'Favourites',
@@ -32,7 +32,7 @@ export default {
   },
 
   created() {
-    getCoinsList(true).then(response => { this.currencies = response.data; });
+    api.getCoinsList(true).then(response => { this.currencies = response.data; });
   }
 };
 </script>
