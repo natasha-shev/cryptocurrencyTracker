@@ -11,10 +11,10 @@
       <v-card-text>
         <v-form>
           <v-combobox
-            v-model="coin.full_name"
+            v-model="name"
             :items="items"
             label="Choose coin"
-            :value="coin.full_name"
+            :value="name"
           >
           </v-combobox>
 
@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       dialogLocal: false,
-      coin: '',
+      name: '',
       buyPrice: 1,
       amount: 1,
       rules: [
@@ -97,7 +97,7 @@ export default {
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       dateFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
       menu1: false,
-      items: ['Example1', 'Example2', 'Example3']
+      items: [],
     };
   },
 
@@ -115,15 +115,22 @@ export default {
 
   created() {
     if (this.curr) {
-      this.coin = {...this.curr};
-      this.items.push(this.coin.full_name);
-      this.buyPrice = this.coin.price_usd;
+      //this.coin = {...this.curr};
+      this.name = this.curr.full_name;
+      this.buyPrice = this.curr.price_usd;
     }
+  },
+
+  beforeCreate() {
+    console.log(this.$store.getters.coinsGetter.map(c => c.full_name));
+    this.items = this.$store.getters.coinsGetter.map(c => c.full_name);
+    console.log('items: '+this.items);
   },
 
   methods: {
     addCoin() {
-      api.addCoin(this.coin.id, this.amount, this.buyPrice, this.date)
+      // find coin by full name
+      api.addCoin(1, this.amount, this.buyPrice, this.date)
       .then(response => {
         console.log(response);
         this.dialogLocal = false;
