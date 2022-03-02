@@ -42,7 +42,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="dateFormatted"
+                v-model="computedDateFormatted"
                 label="Bought on"
                 hint="DD/MM/YYYY format"
                 persistent-hint
@@ -84,6 +84,7 @@ export default {
   name: 'AddCoinDialog',
   props: ['dialog', 'curr'],
 
+  //add rules to date field
   data() {
     return {
       dialogLocal: false,
@@ -104,27 +105,21 @@ export default {
     dialog: function () {
       this.dialogLocal = !this.dialogLocal;
     },
-    date() {
-      this.dateFormatted = this.formatDate(this.date);
+  },
+
+  computed: {
+    computedDateFormatted() {
+      return this.formatDate(this.date);
     }
   },
 
   created() {
-    let today = new Date();
-
-    this.buyDate = ([today.getDate(), today.getMonth()+1, today.getFullYear()].join('-'));
     if (this.curr) {
       this.coin = {...this.curr};
       this.items.push(this.coin.full_name);
       this.buyPrice = this.coin.price_usd;
     }
   },
-
-  // computed: {
-  //   computedDateFormatted() {
-  //     return this.formatDate(this.date);
-  //   },
-  // },
 
   methods: {
     addCoin() {
