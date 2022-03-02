@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token'), // || '',
-    user: {}
+    user: {},
+    coins: []
   },
   mutations: {
     auth_success(state, token) {
@@ -22,12 +23,16 @@ export default new Vuex.Store({
       state.status = '';
       state.token = '';
     },
+    coins_filling(state, coins) {
+      state.coins = coins;
+    }
   },
   actions: {
   },
   modules: {
   },
   getters: {
-    isLoggedIn: state => !!state.token
+    isLoggedIn: state => !!state.token,
+    coinsGetter: state => state.coins
   }
 });
