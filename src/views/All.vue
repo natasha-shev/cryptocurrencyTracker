@@ -16,7 +16,7 @@ export default {
   },
 
   created() {
-    api.getCoinsList(false).then(response => { this.currencies = response.data; });
+    api.getCoinsList().then(response => { this.currencies = response.data; });
   }
 };
 </script>

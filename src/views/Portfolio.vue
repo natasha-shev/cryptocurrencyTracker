@@ -27,12 +27,12 @@ export default {
     };
   },
 
-  computed: {
-
-  },
-
   created() {
-    api.getCoinsList(true).then(response => { this.currencies = response.data; });
+    api.getCoinsList().then(response => {
+      //this.currencies = this.$store.getters.coinsGetter.filter(coin => coin.user_id)
+      this.currencies = response.data.filter(coin => coin.user_id);
+      //this.currencies = response.data;
+    });
   }
 };
 </script>
