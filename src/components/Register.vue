@@ -118,7 +118,7 @@ export default {
           const token = localStorage.setItem('token', response.data.access_token);
 
           self.$store.commit('auth_success', { token: token, status: 'success' });
-          self.$router.push('/favourites');
+          self.$router.push('/portfolio');
         })
         .catch(function (error) {
           if (error.response) {
@@ -130,7 +130,6 @@ export default {
             }
             if (error.response.data.error.password) {
               self.regError.push(error.response.data.error.password[0]);
-              // error.response.data.error.password.forEach(item => self.regError += item)
             }
           } else if (error.request) {
             console.log(error.request);
