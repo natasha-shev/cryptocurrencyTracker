@@ -6,35 +6,31 @@
     <v-btn v-if="this.$store.getters.isLoggedIn"
            icon
            :color="favBtnColor"
-           @click="addToFavourites"
+           @mousedown="dialog = true"
+           @mouseup="dialog = false"
     >
       <v-icon>mdi-star</v-icon>
+      <AddCoinDialog :dialog="dialog" :curr="curr"></AddCoinDialog>
     </v-btn>
   </v-card>
 </template>
 
 <script>
-import axios from 'axios';
+import AddCoinDialog from './AddCoinDialog';
 
 export default {
   name: 'CurrencyName',
+  components: { AddCoinDialog },
   props: ['curr'],
   data() {
       return {
-        favBtnColor: (this.curr.user_id || this.$route.name == 'Portfolio')? '#fcad03' : 'white'
+        favBtnColor: (this.curr.user_id || this.$route.name == 'Portfolio')? '#fcad03' : 'white',
+        dialog: false,
       };
   },
   methods: {
-    addToFavourites() {
-      this.favBtnColor = (this.favBtnColor == 'white')? '#fcad03' : 'white';
-      axios
-        .post('http://127.0.0.1:8000/api/favourite/' + this.curr.id, {}, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        }).then(response => {
-      });
-    }
+    // открыть готовый диалог. передать туда нынешний коин
+      // this.favBtnColor = (this.favBtnColor == 'white')? '#fcad03' : 'white';
    }
 };
 </script>
