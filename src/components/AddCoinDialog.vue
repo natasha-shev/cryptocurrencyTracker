@@ -82,7 +82,7 @@ import api from '../api';
 
 export default {
   name: 'AddCoinDialog',
-  props: ['dialog', 'curr'],
+  props: ['dialog', 'curr', 'currencies'],
 
   //add rules to date field
   data() {
@@ -113,18 +113,12 @@ export default {
     }
   },
 
-  created() {
+  beforeUpdate() {
     if (this.curr) {
-      //this.coin = {...this.curr};
       this.name = this.curr.full_name;
       this.buyPrice = this.curr.price_usd;
     }
-  },
-
-  beforeCreate() {
-    console.log(this.$store.getters.coinsGetter.map(c => c.full_name));
     this.items = this.$store.getters.coinsGetter.map(c => c.full_name);
-    console.log('items: '+this.items);
   },
 
   methods: {
