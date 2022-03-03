@@ -15,19 +15,19 @@
             :items="items"
             label="Choose coin"
             :value="name"
-            :rules="rules"
+            :rules="rules.forAll"
           >
           </v-combobox>
 
 
           <v-text-field v-model="amount"
                         label="Amount"
-                        :rules="rules"
+                        :rules="rules.forAll"
                         :value="amount"
           ></v-text-field>
           <v-text-field v-model="buyPrice"
                         label="Buy price"
-                        :rules="rules"
+                        :rules="rules.forAll"
                         :value="buyPrice"
                         prefix="$"
           ></v-text-field>
@@ -49,7 +49,8 @@
                 persistent-hint
                 prepend-icon="mdi-calendar"
                 v-bind="attrs"
-                @blur="date = parseDate(dateFormatted)"
+                :value="computedDateFormatted"
+                :rules="rules.forAll"
                 v-on="on"
               ></v-text-field>
             </template>
@@ -70,7 +71,10 @@
         >
           Close
         </v-btn>
-        <v-btn @click="addCoin">
+        <v-btn
+          :disabled="!formIsValid"
+          @click="addCoin"
+        >
           Add
         </v-btn>
       </v-card-actions>
@@ -92,9 +96,16 @@ export default {
       name: '',
       buyPrice: 1,
       amount: 1,
-      rules: [
-        value => !!value || 'Required.'
-      ],
+      rules: {
+        forAll: [value => !!value || 'Required.'],
+        // forDate: [
+        //   value => {
+        //     var regex = /^(\d{1,2}\/){2}\d{2}(\d{2})?$/;
+        //
+        //     return 0;
+        //   }
+        // ]
+      },
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       dateFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
       menu1: false,
@@ -112,7 +123,15 @@ export default {
   computed: {
     computedDateFormatted() {
       return this.formatDate(this.date);
-    }
+    },
+    formIsValid() {
+      return (
+        this.name &&
+        this.amount &&
+        this.buyPrice &&
+        this.date
+      );
+    },
   },
 
   beforeUpdate() {
@@ -125,17 +144,6 @@ export default {
   },
 
   methods: {
-    addCoin() {
-      if (!this.coin || this.name != this.coin.full_name) {
-        this.coin = this.$store.getters.coinsGetter.find(c => c.full_name == this.name);
-      }
-      api.addCoin(this.coin.id, this.amount, this.buyPrice, this.date)
-      .then(response => {
-        console.log(response);
-        this.dialogLocal = false;
-      });
-    },
-
     formatDate(date) {
       if (!date) { return null; }
 
@@ -150,7 +158,19 @@ export default {
       const [month, day, year] = date.split('/');
 
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    }
+    },
+
+    addCoin() {
+      if (!this.coin || this.name != this.coin.full_name) {
+        this.coin = this.$store.getters.coinsGetter.find(c => c.full_name == this.name);
+      }
+      this.date = this.parseDate(this.dateFormatted);
+      api.addCoin(this.coin.id, this.amount, this.buyPrice, this.date)
+      .then(response => {
+        console.log(response);
+        this.dialogLocal = false;
+      });
+    },
   }
 };
 </script>
