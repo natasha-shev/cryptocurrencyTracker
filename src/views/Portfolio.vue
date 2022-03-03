@@ -14,7 +14,7 @@
 
 <script>
 import CurrenciesList from '../components/CurrenciesList';
-import api from '../api';
+import store from '../store';
 import AddCoinDialog from '../components/AddCoinDialog';
 export default {
   name: 'Favourites',
@@ -22,15 +22,14 @@ export default {
 
   data() {
     return {
-      currencies: [],
       dialog: false,
     };
   },
 
-  created() {
-    api.getCoinsList().then(response => {
-      this.currencies = response.data.filter(coin => coin.user_id);
-    });
+  computed:  {
+    currencies: () => {
+      return store.getters.coinsGetter.filter(coin => coin.user_id);
+    }
   }
 };
 </script>

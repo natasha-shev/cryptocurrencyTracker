@@ -1,22 +1,19 @@
 <template>
-<CurrenciesList :currencies="currencies"></CurrenciesList>
+  <CurrenciesList :currencies="currencies"></CurrenciesList>
 </template>
 
 <script>
 import CurrenciesList from '../components/CurrenciesList';
-import api from '../api';
+// чому так я не понимаю надо разобраться почему без импорта стора не работает
+import store from '../store';
 export default {
   name: 'All',
   components: { CurrenciesList },
 
-  data() {
-    return {
-      currencies: [],
-    };
-  },
-
-  created() {
-    api.getCoinsList().then(response => { this.currencies = response.data; });
+  computed:  {
+    currencies: () => {
+        return store.getters.coinsGetter;
+    }
   }
 };
 </script>

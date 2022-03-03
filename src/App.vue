@@ -18,19 +18,10 @@ export default {
     Navbar
   },
 
-  // куда это девать
   created() {
     api.getCoinsList().then(response => {
-      //console.log('response.data ' + response.data);
       this.$store.commit('coins_filling', response.data);
-      //this.currencies = this.$store.getters.coinsGetter
     });
   },
-
-  data() {
-    return {
-      currencies: [],
-    };
-  }
 };
 </script>
