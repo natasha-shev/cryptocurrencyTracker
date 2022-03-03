@@ -15,6 +15,7 @@
             :items="items"
             label="Choose coin"
             :value="name"
+            :rules="rules"
           >
           </v-combobox>
 
@@ -82,7 +83,7 @@ import api from '../api';
 
 export default {
   name: 'AddCoinDialog',
-  props: ['dialog', 'curr', 'currencies'],
+  props: ['dialog', 'curr'],
 
   //add rules to date field
   data() {
@@ -98,6 +99,7 @@ export default {
       dateFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
       menu1: false,
       items: [],
+      coin: null,
     };
   },
 
@@ -117,14 +119,17 @@ export default {
     if (this.curr) {
       this.name = this.curr.full_name;
       this.buyPrice = this.curr.price_usd;
+      this.coin = this.curr;
     }
     this.items = this.$store.getters.coinsGetter.map(c => c.full_name);
   },
 
   methods: {
     addCoin() {
-      // find coin by full name
-      api.addCoin(1, this.amount, this.buyPrice, this.date)
+      if (!this.coin || this.name != this.coin.full_name) {
+        this.coin = this.$store.getters.coinsGetter.find(c => c.full_name == this.name);
+      }
+      api.addCoin(this.coin.id, this.amount, this.buyPrice, this.date)
       .then(response => {
         console.log(response);
         this.dialogLocal = false;
