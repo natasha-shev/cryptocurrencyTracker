@@ -169,6 +169,7 @@ export default {
       .then(response => {
         console.log(response);
         this.dialogLocal = false;
+        this.$store.commit('add_coin', this.coin.id);
       });
     },
   }
