@@ -26,6 +26,12 @@ const store = new Vuex.Store({
     },
     coins_filling(state, coins) {
       state.coins = coins;
+    },
+    add_coin(state, coin_name) {
+      state.coins.find(c => c.full_name == coin_name).user_id = 1;
+    },
+    remove_coin(state, coin_name) {
+      state.coins.find(c => c.full_name == coin_name).user_id = null;
     }
   },
   actions: {
