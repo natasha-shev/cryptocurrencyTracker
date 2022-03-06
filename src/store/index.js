@@ -34,8 +34,6 @@ const store = new Vuex.Store({
       coin.amount = payload.amount;
       coin.bought_on = payload.buy_date;
       coin.user_id = 1;
-      console.log(payload.amount);
-      state.coins.splice(coin.id-1, 1, coin);
     },
     remove_coin(state, coin_id) {
       state.coins.find(c => c.id == coin_id).user_id = null;
