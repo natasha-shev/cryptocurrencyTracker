@@ -169,7 +169,16 @@ export default {
       .then(response => {
         console.log(response);
         this.dialogLocal = false;
-        this.$store.commit('add_coin', this.coin.id);
+        if (response.data) {
+          this.$store.commit('remove_coin', this.coin.id);
+        } else {
+          this.$store.commit('add_coin', {
+            coin_id: this.coin.id,
+            amount: this.amount,
+            buy_price: this.buyPrice,
+            buy_date: this.date
+          });
+        }
       });
     },
   }
