@@ -5,7 +5,7 @@
     <v-spacer />
     <v-btn v-if="this.$store.getters.isLoggedIn"
            icon
-           :color="favBtnColor"
+           :color="(this.curr.user_id)? '#fcad03' : 'white'"
            @mousedown="dialog = true"
            @mouseup="dialog = false"
     >
@@ -22,12 +22,16 @@ export default {
   name: 'CurrencyName',
   components: { AddCoinDialog },
   props: ['curr'],
+
   data() {
       return {
-        favBtnColor: (this.curr.user_id || this.$route.name == 'Portfolio')? '#fcad03' : 'white',
         dialog: false,
       };
   },
+
+  computed: {
+  },
+
   methods: {
     // открыть готовый диалог. передать туда нынешний коин
       // this.favBtnColor = (this.favBtnColor == 'white')? '#fcad03' : 'white';
