@@ -11,10 +11,10 @@
       <v-card-text>
         <v-form>
           <v-combobox
-            v-model="name"
+            v-model="coin"
             :items="items"
             label="Choose coin"
-            :value="name"
+            :value="curr? curr.full_name: null"
             :rules="rules.forAll"
           >
           </v-combobox>
@@ -93,7 +93,6 @@ export default {
   data() {
     return {
       dialogLocal: false,
-      name: '',
       buyPrice: 1,
       amount: 1,
       rules: {
@@ -126,7 +125,7 @@ export default {
     },
     formIsValid() {
       return (
-        this.name &&
+        this.coin &&
         this.amount &&
         this.buyPrice &&
         this.date
@@ -136,11 +135,20 @@ export default {
 
   beforeUpdate() {
     if (this.curr) {
-      this.name = this.curr.full_name;
       this.buyPrice = this.curr.price_usd;
-      this.coin = this.curr;
+      this.coin = {
+        value: this.curr,
+        text: this.curr.full_name,
+      };
+    } else {
+      this.items = this.$store.getters.coinsGetter.map(c => {
+        return {
+          value: c,
+          text: c.full_name,
+          disabled: c.user_id
+        };
+      });
     }
-    this.items = this.$store.getters.coinsGetter.map(c => c.full_name);
   },
 
   methods: {
@@ -161,19 +169,16 @@ export default {
     },
 
     addCoin() {
-      if (!this.coin || this.name != this.coin.full_name) {
-        this.coin = this.$store.getters.coinsGetter.find(c => c.full_name == this.name);
-      }
       this.date = this.parseDate(this.dateFormatted);
-      api.addCoin(this.coin.id, this.amount, this.buyPrice, this.date)
+      api.addCoin(this.coin.value.id, this.amount, this.buyPrice, this.date)
       .then(response => {
         console.log(response);
         this.dialogLocal = false;
         if (response.data) {
-          this.$store.commit('remove_coin', this.coin.id);
+          this.$store.commit('remove_coin', this.coin.value.id);
         } else {
           this.$store.commit('add_coin', {
-            coin_id: this.coin.id,
+            coin_id: this.coin.value.id,
             amount: this.amount,
             buy_price: this.buyPrice,
             buy_date: this.date
