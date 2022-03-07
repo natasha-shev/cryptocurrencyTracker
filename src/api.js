@@ -23,5 +23,14 @@ function addCoin(coinId, amount, buyPrice, buyDate) {
     });
 }
 
+function removeCoin(coin_id) {
+  return axios
+    .delete('http://127.0.0.1:8000/api/favourites/'+coin_id, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+}
+
 //export default getCoinsList;
-export default {getCoinsList, addCoin};
+export default {getCoinsList, addCoin, removeCoin};
