@@ -78,7 +78,11 @@
         >
           Close
         </v-btn>
+        <v-btn v-if="curr.user_id">
+          Edit
+        </v-btn>
         <v-btn
+          v-else
           :disabled="!formIsValid"
           @click="addCoin"
         >
