@@ -1,7 +1,10 @@
 <template>
   <v-card tile outlined
           max-width="344"
+          @mousedown="dialog = true"
+          @mouseup="dialog = false"
   >
+    <PriceChart :dialog="dialog" :curr="curr"></PriceChart>
     <CurrencyName :curr="curr" />
     <v-card-title class="justify-center">
       $ {{ curr.price_usd }}
@@ -24,10 +27,12 @@
 
 <script>
 import CurrencyName from './CurrencyName';
+import PriceChart from './PriceChart';
 
 export default {
   name: 'CurrencyPane',
   components: {
+    PriceChart,
     CurrencyName
   },
   props: ['curr'],
@@ -35,6 +40,7 @@ export default {
   data() {
     return {
       profit: this.curr.amount * (this.curr.purchase_price - this.curr.price_usd),
+      dialog: false,
     };
   }
 };
