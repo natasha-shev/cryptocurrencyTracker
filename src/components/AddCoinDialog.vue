@@ -5,7 +5,8 @@
   >
     <v-card>
       <v-card-title class="text-h5">
-        Add new coin to portfolio
+        <span v-if="curr.user_id">Edit coin</span>
+        <span v-else>Add new coin to portfolio</span>
       </v-card-title>
 
       <v-card-text>
@@ -64,6 +65,12 @@
       </v-card-text>
 
       <v-card-actions>
+        <v-btn
+          v-if="curr.user_id"
+          @click="removeCoin"
+        >
+          Delete
+        </v-btn>
         <v-spacer></v-spacer>
 
         <v-btn
@@ -93,7 +100,7 @@ export default {
   data() {
     return {
       dialogLocal: false,
-      buyPrice: 1,
+      buyPrice: this.curr? this.curr.price_usd : 1,
       amount: 1,
       rules: {
         forAll: [value => !!value || 'Required.'],
@@ -135,11 +142,15 @@ export default {
 
   beforeUpdate() {
     if (this.curr) {
-      this.buyPrice = this.curr.price_usd;
       this.coin = {
         value: this.curr,
         text: this.curr.full_name,
       };
+      if (this.curr.user_id) {
+        this.amount = this.curr.amount;
+        this.buyPrice = this.curr.purchase_price;
+        this.date = this.curr.bought_on;
+      }
     } else {
       this.items = this.$store.getters.coinsGetter.map(c => {
         return {
@@ -174,18 +185,23 @@ export default {
       .then(response => {
         console.log(response);
         this.dialogLocal = false;
-        if (response.data) {
-          this.$store.commit('remove_coin', this.coin.value.id);
-        } else {
-          this.$store.commit('add_coin', {
-            coin_id: this.coin.value.id,
-            amount: this.amount,
-            buy_price: this.buyPrice,
-            buy_date: this.date
-          });
-        }
+        this.$store.commit('add_coin', {
+          coin_id: this.coin.value.id,
+          amount: this.amount,
+          buy_price: this.buyPrice,
+          buy_date: this.date
+        });
       });
     },
+
+    removeCoin() {
+      api.removeCoin(this.coin.value.id)
+      .then(response => {
+        console.log(response);
+        this.dialogLocal = false;
+        this.$store.commit('remove_coin', this.coin.value.id);
+      });
+    }
   }
 };
 </script>
