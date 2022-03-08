@@ -4,7 +4,7 @@
           @mousedown="dialog = true"
           @mouseup="dialog = false"
   >
-    <PriceChart :dialog="dialog" :curr="curr"></PriceChart>
+    <PriceChartDialog :dialog="dialog" :curr="curr"></PriceChartDialog>
     <CurrencyName :curr="curr" />
     <v-card-title class="justify-center">
       $ {{ curr.price_usd }}
@@ -27,12 +27,12 @@
 
 <script>
 import CurrencyName from './CurrencyName';
-import PriceChart from './PriceChart';
+import PriceChartDialog from './PriceChartDialog';
 
 export default {
   name: 'CurrencyPane',
   components: {
-    PriceChart,
+    PriceChartDialog,
     CurrencyName
   },
   props: ['curr'],
