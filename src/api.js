@@ -32,5 +32,13 @@ function removeCoin(coin_id) {
     });
 }
 
-//export default getCoinsList;
-export default {getCoinsList, addCoin, removeCoin};
+function editCoin() {
+
+}
+
+function getHistory(coin_id) {
+  return axios
+    .get('http://127.0.0.1:8000/api/history/'+coin_id);
+}
+
+export default {getCoinsList, addCoin, removeCoin, getHistory};
