@@ -13,7 +13,7 @@
     <v-card-subtitle class="justify-center d-flex">
       <v-row v-if="curr.user_id">
         <v-col>Total: {{ curr.amount }} </v-col>
-        <v-col>Profit: ${{ profit.toFixed(3) }}</v-col>
+        <v-col>{{ profitText }}: <span :style="{ color: profitColor}">$ {{ Math.abs(profit.toFixed(4)) }}</span></v-col>
       </v-row>
       <div v-else>
         inf
@@ -39,9 +39,20 @@ export default {
 
   data() {
     return {
-      profit: this.curr.amount * (this.curr.purchase_price - this.curr.price_usd),
       dialog: false,
     };
+  },
+
+  computed: {
+    profit() {
+      return this.curr.amount * (this.curr.price_usd - this.curr.purchase_price);
+    },
+    profitText() {
+      return (this.profit < 0) ? 'Loss' : 'Profit';
+    },
+    profitColor() {
+      return (this.profit < 0) ? 'crimson' : 'green';
+    }
   }
 };
 </script>
