@@ -5,7 +5,7 @@
   >
     <v-card>
       <v-card-title class="text-h5">
-        <span v-if="curr.user_id">Edit coin</span>
+        <span v-if="curr && curr.user_id">Edit coin</span>
         <span v-else>Add new coin to portfolio</span>
       </v-card-title>
 
@@ -66,7 +66,7 @@
 
       <v-card-actions>
         <v-btn
-          v-if="curr.user_id"
+          v-if="curr && curr.user_id"
           @click="removeCoin"
         >
           Delete
@@ -78,7 +78,7 @@
         >
           Close
         </v-btn>
-        <v-btn v-if="curr.user_id">
+        <v-btn v-if="curr && curr.user_id">
           Edit
         </v-btn>
         <v-btn
