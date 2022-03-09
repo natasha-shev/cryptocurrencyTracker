@@ -50,8 +50,35 @@ export default {
       default: null
     }
   },
+  data() {
+    return {
+      gradient: null,
+    };
+  },
   mounted() {
-    this.renderChart(this.chartdata, this.options);
+    this.gradient = this.$refs.canvas
+      .getContext("2d")
+      .createLinearGradient(0, 0, 0, 450);
+
+    this.gradient.addColorStop(0, "rgba(0, 231, 255, 0.9)");
+    this.gradient.addColorStop(0.5, "rgba(0, 231, 255, 0.25)");
+    this.gradient.addColorStop(1, "rgba(0, 231, 255, 0)");
+
+    this.renderChart({
+      labels: this.chartdata.labels,
+      datasets: [
+        {
+
+          borderColor: "#05CBE1",
+          pointBackgroundColor: "white",
+          pointBorderColor: "#05CBE1",
+          borderWidth: 1,
+          backgroundColor: this.gradient,
+          data: this.chartdata.dataset.data
+        }
+      ]
+
+    }, this.options);
   }
 };
 </script>

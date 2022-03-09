@@ -17,7 +17,13 @@ export default {
     return {
       loaded: false,
       chartdata: null,
-      options: { responsive: true, maintainAspectRatio: false, }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        }
+      }
     };
   },
 
@@ -28,12 +34,10 @@ export default {
 
       this.chartdata = {
         labels: this.labels = response.data.map(price => price.created_at),
-        datasets: [
+        dataset:
           {
-            label: 'test',
             data: response.data.map(price => price.price_usd)
           }
-        ]
       };
       this.loaded = true;
     } catch (e) {
