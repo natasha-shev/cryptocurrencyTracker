@@ -23,6 +23,14 @@ const store = new Vuex.Store({
     logout(state) {
       state.status = '';
       state.token = '';
+      state.coins = state.coins.map(c => {
+        c.amount = null;
+        c.bought_on = null;
+        c.user_id = null;
+        c.purchase_price = null;
+        c.coin_id = null;
+        return c;
+      });
     },
     coins_filling(state, coins) {
       state.coins = coins;

@@ -94,6 +94,7 @@ export default {
 
           self.$store.commit('auth_success', { token: token, status: 'success' });
           self.$router.push('/portfolio');
+          self.$router.go(0);
         })
         .catch(function (error) {
           if (error.response) {
