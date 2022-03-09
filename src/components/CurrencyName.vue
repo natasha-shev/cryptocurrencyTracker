@@ -5,9 +5,9 @@
     <v-spacer />
     <v-btn v-if="this.$store.getters.isLoggedIn"
            icon
-           :color="(this.curr.user_id)? '#fcad03' : 'white'"
-           @mousedown="dialog = true"
-           @mouseup="dialog = false"
+           :color="(curr.user_id)? '#fcad03' : 'white'"
+           @mousedown.stop="dialog = true"
+           @mouseup.stop="dialog = false"
     >
       <v-icon>mdi-star</v-icon>
       <AddCoinDialog :dialog="dialog" :curr="curr"></AddCoinDialog>
