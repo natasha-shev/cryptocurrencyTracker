@@ -1,8 +1,8 @@
 <template>
-<PriceChart v-if="loaded"
-            :chartdata="chartdata"
-            :options="options"
-></PriceChart>
+  <PriceChart v-if="loaded"
+              :chartdata="chartdata"
+              :options="options"
+  ></PriceChart>
 </template>
 
 <script>
@@ -12,6 +12,7 @@ import api from '../api';
 export default {
   name: 'PriceChartContainer',
   components: { PriceChart },
+  props: ['curr'],
   data() {
     return {
       loaded: false,
@@ -23,7 +24,7 @@ export default {
   async mounted() {
     this.loaded = false;
     try {
-      const response = await api.getHistory(1);
+      const response = await api.getHistory(this.curr.id);
 
       this.chartdata = {
         labels: this.labels = response.data.map(price => price.created_at),

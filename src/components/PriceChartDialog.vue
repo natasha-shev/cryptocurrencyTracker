@@ -9,7 +9,7 @@
       </v-card-title>
 
       <v-card-text>
-        <PriceChartContainer></PriceChartContainer>
+        <PriceChartContainer :curr="curr"></PriceChartContainer>
       </v-card-text>
 
       <v-card-actions>
