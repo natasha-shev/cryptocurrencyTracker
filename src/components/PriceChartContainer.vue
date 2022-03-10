@@ -22,7 +22,7 @@ export default {
         maintainAspectRatio: false,
         legend: {
           display: false
-        }
+        },
       }
     };
   },
@@ -31,12 +31,22 @@ export default {
     this.loaded = false;
     try {
       const response = await api.getHistory(this.curr.id);
+      let data = response.data.map(d => {
+        let dat = new Date(d.created_at);
+
+        return {date: new Date(dat.toDateString()), price: d.price_usd};
+      });
+
+      const dataUnique = [...new Map(data.map(item =>
+        [item['date'].getTime(), item])).values()];
 
       this.chartdata = {
-        labels: this.labels = response.data.map(price => price.created_at),
+        labels: dataUnique.map(d => {
+          return `${d.date.getDate()}/${d.date.getMonth()+1}/${d.date.getFullYear()}`;
+      }),
         dataset:
           {
-            data: response.data.map(price => price.price_usd)
+            data: dataUnique.map(d => d.price)
           }
       };
       this.loaded = true;
