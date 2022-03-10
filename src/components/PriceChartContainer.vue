@@ -1,8 +1,15 @@
 <template>
+
   <PriceChart v-if="loaded"
               :chartdata="chartdata"
               :options="options"
   ></PriceChart>
+  <div class="text-center" v-else>
+  <v-progress-circular
+    indeterminate
+    color="primary"
+  ></v-progress-circular>
+  </div>
 </template>
 
 <script>
