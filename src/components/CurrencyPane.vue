@@ -13,14 +13,26 @@
     <v-card-subtitle class="justify-center d-flex">
       <v-row v-if="curr.user_id">
         <v-col>Total: {{ curr.amount }} </v-col>
-        <v-col>{{ profitText }}: <span :style="{ color: profitColor}">$ {{ Math.abs(profit.toFixed(4)) }}</span></v-col>
+        <v-col>
+          {{ profitText }}:
+          <span :style="{ color: numbersColor(this.profit)}">
+            $ {{ Math.abs(profit.toFixed(4)) }}
+          </span>
+        </v-col>
       </v-row>
       <div v-else>
         inf
       </div>
     </v-card-subtitle>
     <v-card-text>
-      <v-row>Change% это для всех или для избранных и какая именно change</v-row>
+      <div>как это рассчитывается я не уверен</div>
+      <div v-if="curr.user_id"
+           class="text-center"
+           :style="{ color: numbersColor(percentChange)}"
+      >
+        <v-icon :color="numbersColor(percentChange)">{{ changeIcon }}</v-icon>
+        {{ Math.abs(percentChange).toFixed(4) }} %
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -28,6 +40,7 @@
 <script>
 import CurrencyName from './CurrencyName';
 import PriceChartDialog from './PriceChartDialog';
+import { mdiArrowUpBold, mdiArrowDownBold} from '@mdi/js';
 
 export default {
   name: 'CurrencyPane',
@@ -50,9 +63,18 @@ export default {
     profitText() {
       return (this.profit < 0) ? 'Loss' : 'Profit';
     },
-    profitColor() {
-      return (this.profit < 0) ? 'crimson' : 'green';
+    percentChange() {
+      return 100*(this.curr.purchase_price - this.curr.price_usd)/this.curr.purchase_price;
+    },
+    changeIcon() {
+      return (this.percentChange < 0) ? mdiArrowDownBold : mdiArrowUpBold;
     }
+  },
+
+  methods: {
+    numbersColor(num) {
+      return (num < 0) ? '#DC143C' : 'green';
+    },
   }
 };
 </script>
