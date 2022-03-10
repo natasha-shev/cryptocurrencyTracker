@@ -68,13 +68,14 @@ export default {
       labels: this.chartdata.labels,
       datasets: [
         {
-
+          label: 'USD',
           borderColor: "#05CBE1",
           pointBackgroundColor: "white",
           pointBorderColor: "#05CBE1",
           borderWidth: 1,
           backgroundColor: this.gradient,
-          data: this.chartdata.dataset.data
+          data: this.chartdata.dataset.data,
+          lineTension: 0,
         }
       ]
 

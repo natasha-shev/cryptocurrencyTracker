@@ -23,6 +23,17 @@ export default {
         legend: {
           display: false
         },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                callback: function (label, index, labels) {
+                  return '$' + label;
+                }
+              },
+            }
+          ]
+        }
       }
     };
   },
@@ -46,7 +57,7 @@ export default {
       }),
         dataset:
           {
-            data: dataUnique.map(d => d.price)
+            data: dataUnique.map(d => d.price),
           }
       };
       this.loaded = true;
