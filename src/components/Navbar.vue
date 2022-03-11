@@ -31,7 +31,7 @@
     <div v-else>
       <v-row justify="end">
         <v-col>
-          <Login></Login>
+          <LoginDialog></LoginDialog>
         </v-col>
         <v-col>
           <RegisterDialog></RegisterDialog>
@@ -43,14 +43,14 @@
 
 <script>
 import LogoutButton from './LogoutButton';
-import Login from './Login';
+import LoginDialog from './LoginDialog';
 import RegisterDialog from './RegisterDialog';
 
 export default {
   name: 'Navbar',
   components: {
     RegisterDialog,
-    Login,
+    LoginDialog,
     LogoutButton
   },
   data() {
