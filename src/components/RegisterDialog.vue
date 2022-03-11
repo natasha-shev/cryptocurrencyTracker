@@ -75,7 +75,7 @@ import axios from 'axios';
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 
 export default {
-  name: 'Register',
+  name: 'RegisterDialog',
 
   data() {
     return {

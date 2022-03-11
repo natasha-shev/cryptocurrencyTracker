@@ -34,7 +34,7 @@
           <Login></Login>
         </v-col>
         <v-col>
-          <Register></Register>
+          <RegisterDialog></RegisterDialog>
         </v-col>
       </v-row>
     </div>
@@ -44,12 +44,12 @@
 <script>
 import LogoutButton from './LogoutButton';
 import Login from './Login';
-import Register from './Register';
+import RegisterDialog from './RegisterDialog';
 
 export default {
   name: 'Navbar',
   components: {
-    Register,
+    RegisterDialog,
     Login,
     LogoutButton
   },
