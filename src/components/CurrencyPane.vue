@@ -26,12 +26,20 @@
     </v-card-subtitle>
     <v-card-text>
       <div>как это рассчитывается я не уверен</div>
-      <div v-if="curr.user_id"
-           class="text-center"
-           :style="{ color: numbersColor(percentChange)}"
-      >
-        <v-icon :color="numbersColor(percentChange)">{{ changeIcon }}</v-icon>
-        {{ Math.abs(percentChange).toFixed(4) }} %
+      <div v-if="curr.user_id">
+        <div
+             class="text-center"
+             :style="{ color: numbersColor(percentChange)}"
+        >
+          <v-icon :color="numbersColor(percentChange)">{{ changeIcon }}</v-icon>
+          {{ Math.abs(percentChange).toFixed(4) }} %
+        </div>
+        <div class="text-center">
+          Bought on {{curr.bought_on}}
+        </div>
+        <div class="text-center">
+          Purchase price: {{curr.purchase_price}}
+        </div>
       </div>
     </v-card-text>
   </v-card>
