@@ -152,8 +152,8 @@ export default {
       };
       if (this.curr.user_id) {
         this.amount = this.curr.amount;
-        this.buyPrice = this.curr.purchase_price;
-        this.date = this.curr.bought_on;
+        this.buyPrice = this.curr.price;
+        this.date = this.curr.date;
       }
     } else {
       this.items = this.$store.getters.coinsGetter.map(c => {
@@ -184,7 +184,7 @@ export default {
     },
 
     addCoin() {
-      this.date = this.parseDate(this.dateFormatted);
+      this.date = this.parseDate(this.computedDateFormatted);
       api.addCoin(this.coin.value.id, this.amount, this.buyPrice, this.date)
       .then(response => {
         console.log(response);
@@ -192,8 +192,8 @@ export default {
         this.$store.commit('add_coin', {
           coin_id: this.coin.value.id,
           amount: this.amount,
-          buy_price: this.buyPrice,
-          buy_date: this.date
+          price: this.buyPrice,
+          date: this.date,
         });
       });
     },

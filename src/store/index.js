@@ -25,9 +25,9 @@ const store = new Vuex.Store({
       state.token = '';
       state.coins = state.coins.map(c => {
         c.amount = null;
-        c.bought_on = null;
+        c.date = null;
         c.user_id = null;
-        c.purchase_price = null;
+        c.price = null;
         c.coin_id = null;
         return c;
       });
@@ -38,18 +38,20 @@ const store = new Vuex.Store({
     add_coin(state, payload) {
       let coin = state.coins.find(c => c.id == payload.coin_id);
 
-      coin.purchase_price = payload.buy_price;
+      coin.price = payload.price;
       coin.amount = payload.amount;
-      coin.bought_on = payload.buy_date;
+      coin.date = payload.date;
       coin.user_id = 1;
+      coin.action = 'buy';
     },
     remove_coin(state, coin_id) {
       let coin = state.coins.find(c => c.id == coin_id);
 
       coin.user_id = null;
-      coin.purchase_price = null;
+      coin.price = null;
       coin.amount = null;
-      coin.bought_on = null;
+      coin.date = null;
+      coin.action = null;
     }
   },
   actions: {

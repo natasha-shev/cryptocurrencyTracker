@@ -14,8 +14,9 @@ function addCoin(coinId, amount, buyPrice, buyDate) {
     .post('http://127.0.0.1:8000/api/favourites', {
       coinId: coinId,
       amount: amount,
-      buyPrice: buyPrice,
-      buyDate: buyDate,
+      price: buyPrice,
+      date: buyDate,
+      action: 'buy'
     }, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`

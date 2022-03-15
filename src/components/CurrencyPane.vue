@@ -35,10 +35,10 @@
           {{ Math.abs(percentChange).toFixed(4) }} %
         </div>
         <div class="text-center">
-          Bought on {{curr.bought_on}}
+          Bought on {{curr.date}}
         </div>
         <div class="text-center">
-          Purchase price: {{curr.purchase_price}}
+          Purchase price: {{curr.price}}
         </div>
       </div>
     </v-card-text>
@@ -66,13 +66,13 @@ export default {
 
   computed: {
     profit() {
-      return this.curr.amount * (this.curr.price_usd - this.curr.purchase_price);
+      return this.curr.amount * (this.curr.price_usd - this.curr.price);
     },
     profitText() {
       return (this.profit < 0) ? 'Loss' : 'Profit';
     },
     percentChange() {
-      return 100*(this.curr.purchase_price - this.curr.price_usd)/this.curr.purchase_price;
+      return 100*(this.curr.price - this.curr.price_usd)/this.curr.price;
     },
     changeIcon() {
       return (this.percentChange < 0) ? mdiArrowDownBold : mdiArrowUpBold;
