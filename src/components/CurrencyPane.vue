@@ -12,7 +12,7 @@
 
     <v-card-subtitle class="justify-center d-flex">
       <v-row v-if="curr.user_id">
-        <v-col>Total: {{ curr.amount }} </v-col>
+        <v-col>Total: ${{ curr.amount * curr.price}} </v-col>
         <v-col>
           {{ profitText }}:
           <span :style="{ color: numbersColor(this.profit)}">
