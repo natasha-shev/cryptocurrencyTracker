@@ -12,7 +12,7 @@
 
     <v-card-subtitle class="justify-center d-flex">
       <v-row v-if="curr.user_id">
-        <v-col>Total: ${{ curr.amount * curr.price}} </v-col>
+        <v-col>Total: ${{ curr.amount * curr.price }} </v-col>
         <v-col>
           {{ profitText }}:
           <span :style="{ color: numbersColor(this.profit)}">
@@ -28,17 +28,11 @@
       <div>как это рассчитывается я не уверен</div>
       <div v-if="curr.user_id">
         <div
-             class="text-center"
-             :style="{ color: numbersColor(percentChange)}"
+          class="text-center"
+          :style="{ color: numbersColor(percentChange)}"
         >
           <v-icon :color="numbersColor(percentChange)">{{ changeIcon }}</v-icon>
           {{ Math.abs(percentChange).toFixed(4) }} %
-        </div>
-        <div class="text-center">
-          Bought on {{curr.date}}
-        </div>
-        <div class="text-center">
-          Purchase price: {{curr.price}}
         </div>
       </div>
     </v-card-text>
@@ -66,6 +60,7 @@ export default {
 
   computed: {
     profit() {
+      // теперь это надо считать по-другому
       return this.curr.amount * (this.curr.price_usd - this.curr.price);
     },
     profitText() {
