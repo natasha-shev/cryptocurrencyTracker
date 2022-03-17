@@ -42,7 +42,6 @@ const store = new Vuex.Store({
       coin.amount = payload.amount;
       coin.date = payload.date;
       coin.user_id = 1;
-      coin.action = 'buy';
     },
     remove_coin(state, coin_id) {
       let coin = state.coins.find(c => c.id == coin_id);
@@ -51,7 +50,6 @@ const store = new Vuex.Store({
       coin.price = null;
       coin.amount = null;
       coin.date = null;
-      coin.action = null;
     }
   },
   actions: {
