@@ -27,7 +27,7 @@ const store = new Vuex.Store({
         c.amount = null;
         c.date = null;
         c.user_id = null;
-        c.price = null;
+        c.valuation = null;
         c.coin_id = null;
         return c;
       });
@@ -47,7 +47,7 @@ const store = new Vuex.Store({
       let coin = state.coins.find(c => c.id == coin_id);
 
       coin.user_id = null;
-      coin.price = null;
+      coin.valuation = null;
       coin.amount = null;
       coin.date = null;
     }

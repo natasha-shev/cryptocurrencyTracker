@@ -12,7 +12,7 @@
 
     <v-card-subtitle class="justify-center d-flex">
       <v-row v-if="curr.user_id">
-        <v-col>Total: ${{ curr.amount * curr.price }} </v-col>
+        <v-col>Total: ${{ curr.valuation }} </v-col>
         <v-col>
           {{ profitText }}:
           <span :style="{ color: numbersColor(this.profit)}">
@@ -60,8 +60,7 @@ export default {
 
   computed: {
     profit() {
-      // теперь это надо считать по-другому
-      return this.curr.amount * (this.curr.price_usd - this.curr.price);
+      return this.curr.amount * this.curr.price_usd - this.curr.valuation;
     },
     profitText() {
       return (this.profit < 0) ? 'Loss' : 'Profit';
