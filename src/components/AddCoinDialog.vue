@@ -65,7 +65,7 @@
       </v-card-text>
 
       <v-card-text v-if="curr && curr.amount && !saleIsAvailable" class="error--text">
-        Sale is not possible. Available amount is ${{ curr.amount }}
+        Sale is not possible. Available amount is {{ curr.amount }}
       </v-card-text>
 
       <v-card-actions>
@@ -140,7 +140,7 @@ export default {
       );
     },
     saleIsAvailable() {
-      return (this.curr.amount >= this.amount);
+      return (Number(this.curr.amount) >= Number(this.amount));
     }
   },
 
