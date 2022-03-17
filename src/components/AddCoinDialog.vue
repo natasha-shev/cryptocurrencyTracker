@@ -64,6 +64,10 @@
         </v-form>
       </v-card-text>
 
+      <v-card-text v-if="curr && curr.amount && !saleIsAvailable" class="error--text">
+        Sale is not possible. Available amount is ${{ curr.amount }}
+      </v-card-text>
+
       <v-card-actions>
         <v-btn
           v-if="curr && curr.amount"
@@ -80,7 +84,7 @@
         </v-btn>
         <v-btn
           v-if="curr && curr.amount"
-          :disabled="!formIsValid"
+          :disabled="!formIsValid || !saleIsAvailable"
           @click="action = 'sell'; addCoin();"
         >
           Sell
@@ -122,12 +126,6 @@ export default {
     };
   },
 
-  watch: {
-    dialog: function () {
-      this.dialogLocal = !this.dialogLocal;
-    },
-  },
-
   computed: {
     computedDateFormatted() {
       return this.formatDate(this.date);
@@ -144,6 +142,12 @@ export default {
     saleIsAvailable() {
       return (this.curr.amount >= this.amount);
     }
+  },
+
+  watch: {
+    dialog: function () {
+      this.dialogLocal = !this.dialogLocal;
+    },
   },
 
   beforeUpdate() {
