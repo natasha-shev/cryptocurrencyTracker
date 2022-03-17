@@ -5,7 +5,7 @@
   >
     <v-card>
       <v-card-title class="text-h5">
-        <span v-if="curr && curr.user_id">Edit coin</span>
+        <span v-if="curr && curr.amount">Sell coin</span>
         <span v-else>Add new coin to portfolio</span>
       </v-card-title>
 
@@ -27,7 +27,7 @@
                         :value="amount"
           ></v-text-field>
           <v-text-field v-model="buyPrice"
-                        label="Buy price"
+                        label="Price"
                         :rules="rules.forAll"
                         :value="buyPrice"
                         prefix="$"
@@ -45,7 +45,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="computedDateFormatted"
-                label="Bought on"
+                label="Date"
                 hint="DD/MM/YYYY format"
                 persistent-hint
                 prepend-icon="mdi-calendar"
@@ -66,7 +66,7 @@
 
       <v-card-actions>
         <v-btn
-          v-if="curr && curr.user_id"
+          v-if="curr && curr.amount"
           @click="removeCoin"
         >
           Delete
@@ -78,8 +78,12 @@
         >
           Close
         </v-btn>
-        <v-btn v-if="curr && curr.user_id">
-          Edit
+        <v-btn
+          v-if="curr && curr.amount"
+          :disabled="!formIsValid"
+          @click="action = 'sell'; addCoin();"
+        >
+          Sell
         </v-btn>
         <v-btn
           v-else
@@ -105,16 +109,10 @@ export default {
     return {
       dialogLocal: false,
       buyPrice: this.curr? this.curr.price_usd : 1,
-      amount: 1,
+      amount: this.curr? (this.curr.amount? this.curr.amount: 1) : 1,
+      action: 'buy',
       rules: {
         forAll: [value => !!value || 'Required.'],
-        // forDate: [
-        //   value => {
-        //     var regex = /^(\d{1,2}\/){2}\d{2}(\d{2})?$/;
-        //
-        //     return 0;
-        //   }
-        // ]
       },
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       dateFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
@@ -139,9 +137,13 @@ export default {
         this.coin &&
         this.amount &&
         this.buyPrice &&
-        this.date
+        this.date &&
+        (this.amount > 0)
       );
     },
+    saleIsAvailable() {
+      return (this.curr.amount >= this.amount);
+    }
   },
 
   beforeUpdate() {
@@ -151,9 +153,7 @@ export default {
         text: this.curr.full_name,
       };
       if (this.curr.user_id) {
-        this.amount = this.curr.amount;
         this.buyPrice = this.curr.price;
-        this.date = this.curr.date;
       }
     } else {
       this.items = this.$store.getters.coinsGetter.map(c => {
@@ -167,6 +167,7 @@ export default {
   },
 
   methods: {
+
     formatDate(date) {
       if (!date) { return null; }
 
@@ -184,8 +185,11 @@ export default {
     },
 
     addCoin() {
+      if (this.action === 'sell' && !this.saleIsAvailable) {
+        return;
+      }
       this.date = this.parseDate(this.computedDateFormatted);
-      api.addCoin(this.coin.value.id, this.amount, this.buyPrice, this.date)
+      api.addCoin(this.coin.value.id, this.amount, this.buyPrice, this.date, this.action)
       .then(response => {
         console.log(response);
         this.dialogLocal = false;
