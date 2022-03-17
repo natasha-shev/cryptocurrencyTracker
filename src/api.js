@@ -9,14 +9,14 @@ function getCoinsList() {
         });
 }
 
-function addCoin(coinId, amount, buyPrice, buyDate) {
+function addCoin(coinId, amount, buyPrice, buyDate, action) {
   return axios
     .post('http://127.0.0.1:8000/api/favourites', {
       coinId: coinId,
       amount: amount,
       price: buyPrice,
       date: buyDate,
-      action: 'buy'
+      action: action
     }, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -31,10 +31,6 @@ function removeCoin(coin_id) {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     });
-}
-
-function editCoin() {
-
 }
 
 function getHistory(coin_id) {
