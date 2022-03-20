@@ -7,7 +7,7 @@
     <PriceChartDialog :dialog="dialog" :curr="curr"></PriceChartDialog>
     <CurrencyName :curr="curr" />
     <v-card-title class="justify-center">
-      $ {{ curr.price_usd }}
+      ${{ curr.price_usd }}
     </v-card-title>
 
     <v-card-subtitle class="justify-center d-flex">
@@ -16,7 +16,7 @@
         <v-col>
           {{ profitText }}:
           <span :style="{ color: numbersColor(this.profit)}">
-            $ {{ Math.abs(profit.toFixed(4)) }}
+            ${{ Math.abs(profit.toFixed(4)) }}
           </span>
         </v-col>
       </v-row>
@@ -60,7 +60,7 @@ export default {
 
   computed: {
     profit() {
-      return this.curr.amount * this.curr.price_usd - this.curr.valuation;
+      return this.curr.valuation? (this.curr.amount * this.curr.price_usd - this.curr.valuation) : 0;
     },
     profitText() {
       return (this.profit < 0) ? 'Loss' : 'Profit';
