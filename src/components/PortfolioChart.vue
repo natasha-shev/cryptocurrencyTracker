@@ -22,6 +22,7 @@ export default {
     return {
       loaded: false,
       chartOptions: {
+        axisToZoom: 'xy',
         legend: {
           template: '%icon %name',
           position: 'inside top left'
@@ -31,21 +32,21 @@ export default {
           'Total <b>%yValue</b>',
         defaultPoint_marker_type: 'none',
         xAxis: {
-          crosshair_enabled: true,
           label_text: "Date",
-        },
-        yAxis: {
-          label_text: "Total",
-          formatString: 'c',
           crosshair: {
             enabled: true,
             snapToData: true,
           },
         },
+        yAxis: {
+          label_text: "Total",
+          formatString: 'c',
+        },
         debug: true,
         type: 'line',
         series: [
           {
+            line: { width: 1.5},
             name: 'Portfolio',
             points: []
           }
