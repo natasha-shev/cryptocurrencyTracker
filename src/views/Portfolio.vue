@@ -1,14 +1,50 @@
 <template>
   <div>
-    <v-btn
-      @mousedown="dialog = true"
-      @mouseup="dialog = false"
+    <v-btn tile depressed
+           @mousedown="addDialog = true"
+           @mouseup="addDialog = false"
     >
-      <AddCoinDialog :dialog="dialog"></AddCoinDialog>
+      <AddCoinDialog :dialog="addDialog"></AddCoinDialog>
       Add new coin
     </v-btn>
 
-    <CurrenciesList :currencies="currencies"></CurrenciesList>
+    <v-btn
+      tile
+      depressed
+      @click.stop="portfolioDialog = true"
+    >
+      Statistics
+    </v-btn>
+
+    <v-dialog
+      v-model="portfolioDialog"
+      max-width="800"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          Use Google's location service?
+        </v-card-title>
+
+        <v-card-text>
+          <PortfolioChart></PortfolioChart>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            tile
+            @click="portfolioDialog = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+
+    </v-dialog>
+
+    <CurrenciesList class="mt-6"
+                    :currencies="currencies"
+    ></CurrenciesList>
   </div>
 </template>
 
@@ -16,13 +52,15 @@
 import CurrenciesList from '../components/CurrenciesList';
 import store from '../store';
 import AddCoinDialog from '../components/AddCoinDialog';
+import PortfolioChart from '../components/PortfolioChart';
 export default {
   name: 'Favourites',
-  components: { AddCoinDialog, CurrenciesList },
+  components: { PortfolioChart, AddCoinDialog, CurrenciesList },
 
   data() {
     return {
-      dialog: false,
+      addDialog: false,
+      portfolioDialog: false
     };
   },
 
