@@ -18,11 +18,11 @@
 
     <v-dialog
       v-model="portfolioDialog"
-      max-width="800"
+      max-width="900"
     >
       <v-card>
         <v-card-title class="text-h5">
-          Use Google's location service?
+          Natasha didn't come up with the text
         </v-card-title>
 
         <v-card-text>
@@ -39,7 +39,39 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+    </v-dialog>
 
+    <v-btn
+      tile
+      depressed
+      @click.stop="salesDialog = true"
+    >
+      Sales
+    </v-btn>
+
+    <v-dialog
+      v-model="salesDialog"
+      max-width="900"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          Natasha didn't come up with the text again
+        </v-card-title>
+
+        <v-card-text>
+          <SalesDialog></SalesDialog>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            tile
+            @click="salesDialog = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
 
     <CurrenciesList class="mt-6"
@@ -53,14 +85,16 @@ import CurrenciesList from '../components/CurrenciesList';
 import store from '../store';
 import AddCoinDialog from '../components/AddCoinDialog';
 import PortfolioChart from '../components/PortfolioChart';
+import SalesDialog from '../components/SalesDialog';
 export default {
   name: 'Favourites',
-  components: { PortfolioChart, AddCoinDialog, CurrenciesList },
+  components: { SalesDialog, PortfolioChart, AddCoinDialog, CurrenciesList },
 
   data() {
     return {
       addDialog: false,
-      portfolioDialog: false
+      portfolioDialog: false,
+      salesDialog: false
     };
   },
 
