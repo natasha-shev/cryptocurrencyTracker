@@ -38,4 +38,13 @@ function getHistory(coin_id) {
     .get('http://127.0.0.1:8000/api/history/'+coin_id);
 }
 
-export default {getCoinsList, addCoin, removeCoin, getHistory};
+function getTotal() {
+  return axios
+    .get('http://127.0.0.1:8000/api/total', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+}
+
+export default {getCoinsList, addCoin, removeCoin, getHistory, getTotal};
