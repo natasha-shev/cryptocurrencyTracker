@@ -47,4 +47,13 @@ function getTotal() {
     });
 }
 
-export default {getCoinsList, addCoin, removeCoin, getHistory, getTotal};
+function getSales() {
+  return axios
+    .get('http://127.0.0.1:8000/api/sales', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+}
+
+export default {getCoinsList, addCoin, removeCoin, getHistory, getTotal, getSales};
