@@ -17,7 +17,7 @@
       </div>
       <div v-if="this.$route.name == 'Home'">
         <router-link to="/portfolio" style="text-decoration: none">
-          <v-btn>My coins</v-btn>
+          <v-btn>Portfolio</v-btn>
         </router-link>
       </div>
     </div>
