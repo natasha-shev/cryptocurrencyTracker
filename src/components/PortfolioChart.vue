@@ -1,14 +1,19 @@
 <template>
-  <JSCharting
-    v-if="loaded"
-    :options="chartOptions"
-    class="columnChart"
-  ></JSCharting>
-  <div v-else class="text-center">
-    <v-progress-circular
-      indeterminate
-      color="primary"
-    ></v-progress-circular>
+  <div>
+    <JSCharting
+      v-if="loaded && isChartDataExists"
+      :options="chartOptions"
+      class="columnChart"
+    ></JSCharting>
+    <div v-else-if="!loaded" class="text-center">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+    </div>
+    <div v-else>
+      Nothing to show
+    </div>
   </div>
 </template>
 
@@ -18,9 +23,13 @@ import api from '../api';
 
 export default {
   name: 'PortfolioChart',
+  components: {
+    JSCharting
+  },
   data() {
     return {
       loaded: false,
+      isChartDataExists: false,
       chartOptions: {
         axisToZoom: 'xy',
         legend: {
@@ -54,17 +63,18 @@ export default {
       }
     };
   },
-  components: {
-    JSCharting
-  },
 
   beforeCreate() {
     api.getTotal().then(response => {
+      this.loaded = true;
+      if (response.data.length == 0) {
+        return;
+      }
       this.chartOptions.series[0].points = response.data.map((value) => {
         return [new Date(value.datetime), value.total];
       });
-      this.loaded = true;
-      //console.log(new Date(response.data[0].datetime));
+      this.isChartDataExists = true;
+      console.log(response.data);
     });
   }
 };
