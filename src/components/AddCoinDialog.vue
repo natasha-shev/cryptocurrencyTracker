@@ -161,7 +161,6 @@ export default {
         return {
           value: c,
           text: c.full_name,
-          disabled: c.user_id
         };
       });
     }
