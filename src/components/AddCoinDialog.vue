@@ -26,10 +26,10 @@
                         :rules="rules.forAll"
                         :value="amount"
           ></v-text-field>
-          <v-text-field v-model="buyPrice"
+          <v-text-field v-model="price"
                         label="Price"
                         :rules="rules.forAll"
-                        :value="buyPrice"
+                        :value="price"
                         prefix="$"
           ></v-text-field>
 
@@ -112,7 +112,7 @@ export default {
   data() {
     return {
       dialogLocal: false,
-      buyPrice: this.curr? this.curr.price_usd : 1,
+      price: this.curr? this.curr.price_usd : 1,
       amount: this.curr? (this.curr.amount? this.curr.amount: 1) : 1,
       action: 'buy',
       rules: {
@@ -134,7 +134,7 @@ export default {
       return (
         this.coin &&
         this.amount &&
-        this.buyPrice &&
+        this.price &&
         this.date &&
         (this.amount > 0)
       );
@@ -156,9 +156,6 @@ export default {
         value: this.curr,
         text: this.curr.full_name,
       };
-      if (this.curr.user_id) {
-        this.buyPrice = this.curr.price;
-      }
     } else {
       this.items = this.$store.getters.coinsGetter.map(c => {
         return {
@@ -193,14 +190,14 @@ export default {
         return;
       }
       this.date = this.parseDate(this.computedDateFormatted);
-      api.addCoin(this.coin.value.id, this.amount, this.buyPrice, this.date, this.action)
+      api.addCoin(this.coin.value.id, this.amount, this.price, this.date, this.action)
       .then(response => {
         console.log(response);
         this.dialogLocal = false;
         this.$store.commit('add_coin', {
           coin_id: this.coin.value.id,
           amount: this.amount,
-          price: this.buyPrice,
+          price: this.price,
           date: this.date,
         });
       });
